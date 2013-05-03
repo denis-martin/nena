@@ -4,22 +4,20 @@ Prerequisites
 =============
 
 You will need SCons (http://www.scons.org) which is used instead of
-make/automake as the build system.
+make/automake as the build system (Ubuntu-Package: scons)
 
 You will need some basic C++ Boost libraries (http://www.boost.org), which are
-an extension of the C++ STL. You will need version 1.41 or newer. The libraries
+an extension of the C++ STL. You will need version 1.46 or newer. The libraries
 might be part of your favorite Linux distribution, or you can download and
-compile them yourself.
+compile them yourself (Ubuntu-Package: libboost-all-dev)
 
-For some example building blocks, the crypto++ library is need (libcrypto++).
+For some example building blocks, you'll need the crypto++ library
+(libcrypto++), but it is not needed for the default configuration.
 
-For running the Node Architecture inside the OMNeT++ Simulator, you need to
-install OMNeT++ and add its bin-directory to your $PATH variable. SCons SHOULD
-then be able to find OMNeT++. If you are not familiar with OMNeT++, try out its
-tictoc tutorial first.
-
-On FreeBSD, most of the tools / libraries should be available via ports. The
-current source version should compile and install without any problems.
+For running the NENA inside the OMNeT++ Simulator, you need to install OMNeT++ 
+and add its bin-directory to your $PATH variable. SCons SHOULD then be able to
+find OMNeT++. If you are not familiar with OMNeT++, try out its tictoc tutorial
+first.
 
 
 Compiling
@@ -52,55 +50,33 @@ comfortable debugging of your code using GDB.
 Running
 =======
 
-For name/address resolution in Simple Architecture, the file "resolver.conf"
-must be present in the current working directory. An example of such a file
-can be found in src/targets/omnetpp. The easiest way is to link it into the
-build directory, where the actual executable is to be found:
+In nena/examples/localhost you'll find an example configuration with two nodes,
+the SimpleArchitecture, and a simple Ping-Pong application. Launch the
+following commands in four different terminals:
 
-  cd build/targets/omnetpp   # or build/targets/boost respectively
-  ln -s ../../../src/targets/omnetpp/resolver.conf
+Launch NENA daemon for 1st node:
 
-You'll find the executables in the build/targets/*/ directories. Remember that
-you need two additional files in order to run the OMNeT++ simulations (namely
-omnetpp.ini and a .ned file). You'll find examples in the src/targets/omnetpp/
-directory. The easiest way is to link them into the build directory:
+  1> cd nena/examples/localhost/node01
+  1> ./run.sh
 
-  cd build/targets/omnetpp
-  ln -s ../../../src/targets/omnetpp/omnetpp.ini
-  ln -s ../../../src/targets/omnetpp/two-nodes.ned
+Launch NENA daemon for 2nd node:
 
-To run the OMNeT++ GUI run the following commands from the root directory of
-the repository:
+  2> cd nena/examples/localhost/node02
+  2> ./run.sh
 
-  cd build/targets/omnetpp
-  ./omnet_na
+Launch PingPong server application on node02:
 
+  3> cd nena/examples/localhost/node02
+  3> ./run-pingServer.sh
 
-Extra notes on running the daemon on real systems
-=================================================
+Launch PingPong client application on node01:
 
-The current version for real systems is based on boost and uses a UDP socket
-for communications via the network, and a local UNIX socket for communication
-with local applications. A simple example for such an application can be found
-in demoApps/nodeconnector. A more complex one with a graphical user interface
-can be found in demoApps/camApp.
+  4> cd nena/examples/localhost/node01
+  4> ./run-ping.sh
 
-To run the daemon on Linux, simply type
-
-  cd build/targets/boost
-  ./nad --unlink boost_sock --vvv --name <local node name>
-
-The first parameter ensures, that the local UNIX socket used to communicate
-with external applications will be recreated when starting the daemon. The
-second parameter defines the verbosity level (-v lowest, -vvvvv highest). The
-third parameter specifies the local node name. There MUST be an entry in the 
-resolver.conf file for this node name. For more details, type
-
-  ./nad --help
-
-The resolver.conf file MUST contain the special node name "node://broadcast",
-and the address MUST specify the broadcast address of the local subnet used
-for testing. Note, that the port number is mandatory (currently 50779).
+For the last command, you may optionally request a reliable transport protocol
+(with ./run-ping.sh -r) or an unreliable transport protocol (-u). You should
+then notice different console outputs from both NENA nodes.
 
 
 Acknowledgments
@@ -123,10 +99,11 @@ design (listed in alphabetical order):
   Lars Völker, KIT, Karlsruhe, Germany
   Martina Zitterbart, KIT, Karlsruhe, Germany
 
-  ...and all the 4WARD (www.4ward-project.eu) people for interesting
-  discussions and feedback!
+  ...and all the 4WARD (www.4ward-project.eu) and G-Lab (german-lab.de) people
+  for interesting discussions and feedback!
 
 --
+2013-05-03 denis: Updated instructions
 2010-06-11 denis: Added acknowledgment section
 2009-10-10 denis: Updated instructions for running the daemon version
 2009-09-09 denis: Updated build instructions
