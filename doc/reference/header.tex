@@ -1,0 +1,109 @@
+\documentclass[a4paper,10pt]{book}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{import}
+\usepackage{cite} % allow reordering of cites... [2],[1] --> [1],[2]
+
+% to handle metapost
+\usepackage{emp}
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+% doxygen specific
+\usepackage{a4wide}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage{times}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\else
+\usepackage[ps2pdf,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\usepackage{pspicture}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage{doxygen}
+\makeindex
+\setcounter{tocdepth}{3}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}
+{\Large A Node Architecture for Netlet Execution}\\
+\vspace*{1cm}
+{\large Denis Martin\\
+	Helge Backhaus\\
+	Peter Baumung\\
+	Benjamin Behringer\\
+	Gorka Hernando Garcia\\
+	Hans Wippel}\\
+\vspace*{0.5cm}
+{\small $date}\\
+\end{center}
+\end{titlepage}
+
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+
+% =====
+
+% metauml
+\begin{empfile}
+
+\begin{empcmds}
+input metauml;
+
+% p: Adobe, hv: Helvetiva, r: ??, o: Oblique/Italic, 8r: Encoding, n: Narrow
+string myfont;
+string myfont_italic;
+string myfont_narrow;
+string myfont_narrow_italic;
+myfont := "phvr8r";
+myfont_italic := "phvro8r";
+myfont_narrow := "phvr8rn";
+myfont_narrow_italic := "phvro8rn";
+
+iClass.foreColor := (.96, .96, .96);
+iClass.iName.iFont.name := myfont;
+iClass.iAttributeStack.iPict.iFont.name := myfont_narrow;
+iClass.iAttributeStack.iPict.iFont.scale := 0.85;
+iClass.iMethodStack.iPict.iFont.name := myfont_narrow;
+iClass.iMethodStack.iPict.iFont.scale := 0.85;
+
+ClassInfoCopy.iInterface(iClass);
+iInterface.iName.iFont.name := myfont_italic;
+ClassInfoCopy.iAbstractClass(iInterface);
+
+\end{empcmds}
+
+\import{../}{class-overview}
+
+\end{empfile}
+
+% ======
+
+

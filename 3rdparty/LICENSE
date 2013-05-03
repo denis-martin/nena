@@ -1,0 +1,11 @@
+Third party software.
+
+Files under this folder and its subfolders are not subject to the general
+license agreement of the Node Architecture package. The 3rd party licenses,
+however, allow their distribution within this package.
+
+For details on the respective licenses, please refer to the individual folders
+and files.
+
+Denis Martin, Karlsruhe Institute of Technology, Germany, June 2010
+

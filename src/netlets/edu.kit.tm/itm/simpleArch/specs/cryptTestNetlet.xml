@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<spec>
+	<components type="netlet">
+		<component id="netlet://edu.kit.tm/itm/simpleArch/cryptTestNetlet">
+			<parameter name="archName">
+				<value datatype="string">architecture://edu.kit.tm/itm/simpleArch</value>
+			</parameter>
+			<parameter name="handlerRegEx">
+				<value datatype="string">.*</value>
+			</parameter>
+			<parameter name="buildingBlockChain">
+				<value datatype="string" type="table" height="5" width="2">
+					<tr><td>bb://edu.kit.tm/itm/crypt/Bb_Frag</td><td>crypt</td></tr>
+					<tr><td>bb://edu.kit.tm/itm/crypt/Bb_Pad</td><td>crypt</td></tr>
+					<tr><td>bb://edu.kit.tm/itm/crypt/Bb_Enc</td><td>crypt</td></tr>
+					<tr><td>bb://edu.kit.tm/itm/crypt/Bb_Header</td><td>crypt</td></tr>
+					<tr><td>bb://edu.kit.tm/itm/crypt/Bb_CRC</td><td>crypt</td></tr>		
+				</value>
+			</parameter>
+		</component>
+	</components>
+</spec>

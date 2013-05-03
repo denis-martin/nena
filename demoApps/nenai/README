@@ -1,0 +1,6 @@
+
+Low-level IPC interface for NENA. Currently supports Unix local domain sockets
+and boost shared memory.
+
+Used by ../tmnet and other applications. However, most applications should be
+happy using the high-level, name-based tmnet-API instead.

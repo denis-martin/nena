@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+  <components type="netadapt">
+    <component id="netadapt://boost/udp/">
+      <parameter name="allowedHosts">
+        <value datatype="string" type="list" length="1">
+          <li>localhost</li>
+        </value>
+      </parameter>
+    </component>
+  </components>
+</spec>

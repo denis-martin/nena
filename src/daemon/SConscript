@@ -1,0 +1,51 @@
+
+import os
+import subprocess
+
+Import('env')
+
+sources = [
+	'#/src/daemon/nena.cpp',
+	'#/src/daemon/netAdaptBroker.cpp',
+	'#/src/daemon/netletSelector.cpp',
+	'#/src/daemon/localRepository.cpp',
+	'#/src/daemon/management.cpp',
+	'#/src/daemon/pugixml.cpp',
+	'#/src/daemon/management.cpp',
+	'#/src/daemon/xmlfilehandling.cpp',
+	'#/src/daemon/nenaconfig.cpp',
+	'#/src/daemon/modelBased/netletTemplate.cpp',
+	'#/3rdparty/xmlNode/xmlNode.cpp',
+]
+
+envNad = env.Clone()
+
+#luaArchive = '/3rdparty/luajit-2.0/src/libluajit.a'
+#luaArchiveSo = '/3rdparty/luajit-2.0/src/libluajit.so'
+#
+#if not os.path.exists(env.GetLaunchDir() + luaArchive):
+#	subprocess.call(['make', '-C', env.GetLaunchDir() + '/3rdparty/luajit-2.0'])
+#	
+#if os.path.exists(env.GetLaunchDir() + luaArchiveSo):
+#	subprocess.call(['rm', '-f', env.GetLaunchDir() + luaArchiveSo])
+#	
+#if os.path.exists(env.GetLaunchDir() + luaArchive):
+#	envNad['CPPPATH'].append(['#/3rdparty/luajit-2.0/src'])
+#	env['LIBPATH'].append(['#/3rdparty/luajit-2.0/src'])
+#	env['LIBS'].append(['luajit'])
+#
+#	sources.append([
+#		'modelBased/bb_lua.cpp',
+#		'modelBased/modelBasedNetlet.cpp'
+#	])
+#	
+#else:
+#	print "  LuaJIT archive not found, model-based Netlet won't be built."
+#	print "  If you want to build the model-based Netlet, go to the directory"
+#	print "  '3rdparty/luajit-2.0' and type 'make'."
+#
+#envNad['CPPPATH'].append([
+#	'modelBased'
+#])
+
+Default(envNad.StaticLibrary('nad', sources))

@@ -1,0 +1,20 @@
+
+Import('env')
+
+# edu.kit.tm/itm/sig - some BBs for signalling (e.g., REST)
+env.SConscript(['edu.kit.tm/itm/sig/SConscript'])
+
+# edu.kit.tm/itm/transport - simple transport BBs (segmentation, Go-Back-N)
+env.SConscript(['edu.kit.tm/itm/transport/SConscript'])
+
+### not used or outdated
+
+# edu.kit.tm/itm/demo - simple video streaming building blocks
+#env.SConscript(['edu.kit.tm/itm/demo/SConscript'])
+
+# edu.kit.tm/itm/crypt - crypto BBs (needs libcrypto++-dev)
+#env.SConscript(['edu.kit.tm/itm/crypt/SConscript'])
+
+# edu.kit.tm/itm/reliable - finegranular BBs for reliable transport
+# (currently outdated)
+#env.SConscript(['edu.kit.tm/itm/reliable/SConscript'])

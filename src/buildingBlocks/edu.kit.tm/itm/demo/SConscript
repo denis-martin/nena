@@ -1,0 +1,28 @@
+
+Import('env')
+
+bbenv = env.Clone();
+
+bbenv.Append(CCFLAGS = ['-O2', '-funroll-loops', '-fPIC'])
+
+# includes
+bbenv['CPPPATH'].append([
+	'video'
+])
+
+staticfiles = [
+	'video/vid_converter.cpp',
+	'video/vid_idct.cpp',
+	'video/vid_quantizer.cpp',
+	'video/vid_serializer.cpp',
+	'video/vid_structs.cpp',
+#	'video/vid_codec.cpp'
+]
+
+sharedfiles = list()
+sharedfiles.append(staticfiles)
+sharedfiles.append('loader.cpp')
+
+Default(bbenv.StaticLibrary('itm-demo', staticfiles))
+Default(bbenv.SharedLibrary('itm-demo', sharedfiles))
+

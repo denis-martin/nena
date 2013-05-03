@@ -1,13 +1,22 @@
-# Compiled Object files
-*.slo
-*.lo
+.sconsign.dblite
+src/targets/omnetpp/omnetPacket_m.cc
+src/targets/omnetpp/omnetPacket_m.h
+build/*
+.pydevproject
+.AppleDouble
+demoApps/perf-test/perf_tmnet
+demoApps/pingPong/ping_nenai
+demoApps/pingPong/ping_tmnet
+demoApps/tmnet/test_c
+demoApps/Euroview 2012 Media Player/mediaPlayer
+demoApps/Euroview 2012 Media Server/mediaServer
 *.o
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
 *.a
+*.os
+*.so
+*.webm
+*~
+*moc*
+*.log
+*.pyc
+*.signalling

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+ 
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+ 
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>nenaprotocols@tm.kit.edu</em:id>
+    <em:version>HERE_VERSION</em:version>
+    <em:type>2</em:type>
+    <em:unpack>true</em:unpack>
+    
+    <!-- Target Application this extension can install into,
+         with minimum and maximum supported versions. -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>HERE_FFVERSION</em:minVersion>
+        <em:maxVersion>HERE_FFVERSION</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+    
+    <!-- Front End MetaData -->
+    <em:name>NenaProtocols</em:name>
+    <em:description>Protocol Handler for NENA framework URLs</em:description>
+    <em:creator>Florian Richter</em:creator>
+    <em:homepageURL>http://nena.intend-net.org/</em:homepageURL>
+    <em:targetPlatform>HERE_ABI</em:targetPlatform>
+  </Description>     
+</RDF>

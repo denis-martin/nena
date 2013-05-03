@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+  <components type="appServer">
+    <component id="appServer://boost/socket/">
+      <parameter name="socketName">
+        <value datatype="string">boost_sock</value>
+      </parameter>
+    </component>
+  </components>
+</spec>

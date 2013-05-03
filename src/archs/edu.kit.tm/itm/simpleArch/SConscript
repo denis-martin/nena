@@ -1,0 +1,11 @@
+
+Import('env')
+
+mpEnv = env.Clone()
+
+mpEnv['LIBS'].append(['md5'])
+mpEnv['LIBPATH'].append(['#/3rdparty'])
+
+Default(mpEnv.SharedLibrary('#/build/archs/simplemultiplexer', [
+	'simpleMultiplexer.cpp'	
+]))

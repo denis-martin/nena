@@ -1,0 +1,7 @@
+
+For this example, you need to compile NENA with MF2 support:
+
+  scons
+  scons mf2=1 omnet
+
+

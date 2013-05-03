@@ -1,0 +1,18 @@
+
+There is a script which does the following steps for you (generate.sh):
+
+To change namespace/scheme:
+ * Edit chrome.manifest and change second line (name=<scheme>)
+ * Edit install.rdf and change em:name and em:homepageURL tag
+ * Edit components/localweb.js (var protocol_scheme)
+
+To build an XPI:
+ * Use zip within the src folder:
+   * zip -r ../localweb-<scheme>-<version>.xpi *
+
+To install multiple extensions in parallel:
+ * Generate an UUID (there are loads of web-pages for that)
+ * Change UUID:
+   * in chrome.manifest
+   * in components/localweb.js (var component_id)
+

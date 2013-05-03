@@ -1,0 +1,346 @@
+2010-10-11	r670
+
+	* some major changes in this release:
+	  * merged multithreading branch into trunk; might be still slightly
+	    unstable if used heavily
+	  * new application interface; now supports UNIX sockets and shared
+	    memory connections
+	* fixed some bugs in new boost app connector; adapted pingPong to
+	  new app connector
+	* fixed mem leaks in OLSR and AODV Netlet
+	* fixed documentation bug
+	* fixed some memory leaks
+	* removed valgrind boost uninitialized warning, not sure if
+	  necessary though
+	* enhanced nenai-test
+	* added stats view in nenai-test
+	* fixed boost memory leaks, some lib weirdness still present and
+	  one mem leak marked as todo
+	* some more fixes, working nenai-test without benchmark yet
+	* some bugfixes and changes to nenai-test
+	* some bugfixes and nenai naming
+	* naio test, first working version and nodeconnecor improvements
+	* fixed ticket #27
+	* fixed ticket #32
+	* fixed ticket #29
+	* removed stale file
+	* merged branch hiwi-behringer-multithreading to trunk; current
+	  revision is unstable
+	* some initial work for an android port (not functional atm)
+	* added missing file
+
+2010-07-02	r554
+
+	* fixed ticket #24 (bug in CPacket::clone())
+	* updated license and readme
+	* added functions for dynamically changing FEC levels of the demo
+	  video codec
+	* enhanced state viewer to visualize change of OLSR/AODV protocols
+	* added state viewer config file for wireless04 examples
+	* RoutingManager updates
+	* added cbr streaming for omnet
+	* small bug fix regarding registration of
+	  EVENT_SIMPLEARCH_UNHANDLEDPACKET
+	* added possibility to change OMNeT icons during simulation
+	* added event for unhandled packets
+	* MediaApp readme updated
+	* removed message profiling tag
+	* initial support for performance analysis, some fixes
+	* added benchmark ratio and packet size
+	* added run scripts
+	* simple benchmark building block
+	* using boost pointers in some places
+	* code cleanup
+	* working encryption
+	* itm-crypt with padding and crc32
+	* encryption pre version with linking problem
+	* all crypt test building blocks, rudimentary functionality
+
+2010-03-26	r473
+
+	* Interface update: more consistent clone() function to messages
+	  and derivatives
+	* Interface update: added load/unload functions to repository
+	* added preliminary version of ad-hoc routing manager
+	* added removal of pending events for deleted message processors
+	* pyqt-tc: aachen demo updates
+	* pyqt-tc: changes background image for aachen demo
+	* netlet designer tool updates
+	* demo01: client prep script updated
+	* demo01: server run script updated
+	* added netlet project files (Netlet Editor)
+	* added support for demo repository
+	* stateViewer updates
+	* Added ReEvaluate Button to Media App, added Control Netlet
+	  handling to deamonStatusBB and stateViewer app, minor config file
+	  modifications
+	* added stateViewer start scripts
+	* added second client for demo01
+	* some fixes for vnet01 deployment
+	* added simple multi streamer BB (stream duplication on request)
+	* fixed a small memory leak
+	* HiiMap BB added
+	* Added application disconnect event to stateviewer
+	* added new event: Application Disconnect
+	* updated readme
+	* added some scripts for demo01
+	* updated build dependencies for media apps
+	* integrated dual threading (separate I/O thread)
+	* added "enable" config parameter for hiimap bb
+	* update of resolveMap based on resolver requests
+	* added md5 implementation
+	* added function to simple name/addr mapper to resolve name to id
+	* added simple traffic smoothing BB
+	* added preliminary containers for option strings
+	* statusViewer and sigBB updates
+	* now using packet loss rate in netlet selection when received via
+	  daemonStatus BB
+	* non-console streamer port from vlc to libavcodec complete
+	* status netlet updates and added looping functionality to video
+	  streamer
+	* pyqt-tc - TC GUI: simplegui changed, now periodically sends
+	  current loss probability to hosts set in the configuration (i.e.,
+	  upper) part of the script
+	* added new ARQ BB Stop & Wait
+	* added Stop&Wait BB to simpleSigNetlet
+	* added RequestRemoteNetlet functionality to bb_netletSig
+	* added cropping of videos to all mediaApps
+	* excluded performance output
+	* mediaStreamer cleaned up
+	* ported mediaStreamer from vlc to libavcodec
+	* graceful handling of undefined symbols when loading Netlets
+	* small update in MAAM Netlet
+	* added template Netlets and BBs for Netlet signalling and daemon
+	  status information
+	* python2.5 fixes
+	* little fixes in SimpleRoutingNetlet
+	* preliminary MAAM Netlet (tbc)
+	* added maam-core files
+
+2010-01-21  r372
+
+	* added defaultNetlet configuration parameter
+	* added config files for TC23 testbed
+	* added media apps documentation
+	* console version of MediaStreamer
+	* updated MediaStreamer
+	* updated MediaApp
+	* added example config files for executing several daemons on the
+	  local machine (localhost example)
+	* changed config file of mediaStreamer for use with localhost
+	  examples
+	* fixed debugging output of simple multiplexer
+
+2010-01-14  r354
+
+	* some bug fixes in pingPong application
+	* added new application/nodeArch interface (CNaio)
+	* some minor XML additions
+	* added config files for glab020 and glab030
+	* added hierarchical properties structure including its XML import
+	* changed some getter methods to const; fixed compiler warnings in
+	  boost wrapper
+	* some minor fixes in the AODV and OLSR implementations
+
+2009-12-18  r338
+
+	* added message property to disallow the multiplexer to
+	  auto-forward messages (IMessage::p_autoForward)
+	* update of OLSR and AODV Netlets
+	* little fix in OMNeT wrapper
+	* fixed some issues with the IP control information of the INET
+	  support part
+	* some debug output for nodeconnector added...
+	* fixed payload error of SimpleNetlet
+	* fixed missing include
+	* removed / added some debug info
+	* added next-hop support to boost netadapt
+	* added a small "security" feature to boost netadapt
+	  ([boost:allowedHosts] may now be specified in the nad.conf file)
+	* some G-Lab config files
+	* little namespace fix
+	* added auto-detection of boost_*-mt libraries in build system
+	* fix for gcc 4.1
+	* restructured Netlet / architecture files
+	* changed organisation of BBs
+	* added new demo apps
+	* updated latex documentation
+	* updated Doxyfile
+
+2009-12-01  r315
+
+	* changed to boost::spirit v1.8.x
+	* added support for MF2 (see wireless03_mf example)
+	* added ping app for boost target
+	* added preliminary support for multiple locators (testing)
+	* bugfix in CSystemBoost::random()
+
+2009-11-12  r309
+
+	* added random() function to system wrapper
+	* added getSys() to daemon class
+	* changed COmnetPacket to a *.msg file
+	* added OMNeT IDE project files for examples
+	* added preliminary support for the INET framework and the INET
+	  MANET fork (testing)
+	* first release of wireless01 example using the INET framework's
+	  802.11 adhoc implementation (wip)
+	* added nad.conf configuration file used to change various
+	  runtime parameters
+	* evaluate content of example nad.conf at respective places
+	* added AODV/OLSR Netlets for simple architecture (thanks to
+	  Gorka Hernando Garcia)
+	* camApp update and blank screen app
+	* pyqt-tc: small update
+	* boost target: error handling for send error
+	* boost target: try-catch addded
+	* fix: send messages only to app if the app is currently associated
+	  to the sending Netlet
+	* added config file to camApp
+	* added output for currently used netlet
+	* fixed possible memory leak
+	* pyqt-tc: added nodearch-available-netlets and nodearch-pkt-loss
+	  files as backup/for testing purposes
+	* changed deploy config script
+	* camApp device parameter added
+	* benchmark netlet update
+	* boost target: port selection included
+	* Changed writes to application to synchronous versions
+	* fixed bug where header-data buffer on stack was used with
+	  async_write
+	* pyqt-tc: removed upload script invocation again because it should
+	  not be needed
+	* pyqt-tc: download-loss.sh and download-netlets.sh scripts added
+	* camApp animations added
+
+2009-10-10  r257
+
+	* added ISystemWrapper::getSysTime()
+	* camApp threadfix and resolution change
+	* pyqt-tc: simpleweb, download und upload skripte hinzugefuegt
+	* added some usefull error output
+	* changed frame_no type from 32 to 16 bit... overflowing sequence
+	  numbers shouldn't be a problem anyway, since they are used for
+	  discerning frames only and not for re-ordering...
+	* added uint32_t
+	* some 64bit fixes
+	* fixed ticket #19
+	* pyqt-tc: simplegui hinzugefuegt
+	* async send and socket test
+	* multithreaded camApp
+	* pyqt-tc: bridge script angepasst, pyqt.tc aktualisiert
+	* deploy/generator scripts
+	* once again fixed clipping LUTs...
+	* selection based on deployment file and packet loss file added
+	* added profiling output
+	* added output for dropped frames
+	* pyqt-tc: bridge script hinzugefuegt
+	* camApp send changed to 24bpp
+	* hopefully fixed white stripes ;-)
+	* benchmark with correct mutex and naming
+	* added actual video transport netlets
+	* benchmark app updated
+	* transformed class CVid_Serializer and CVid_Quantizer into
+	  interfaces IVid_Serializer and IVid_Quantizer respectively
+	* introduced true building blocks IVid_Quantizer_(No/Lo/Hi)FEC
+	  and IVid_Serializer_(No/Lo/Hi)FEC based on respective interface
+	  classes
+	* allow changes of aggregated packet sizes through
+	  IVid_Serializer::setAggregationSize(int size)
+	* save 25% of local socket overhead by changing bitmap format
+	  received from/sent to application from 32 bit RGBA to 24 bit RGB
+	* added benchmark netlet
+	* removed console output
+	* added statistics output
+	* changed buffering of local socket; changed scheduling to a basic
+	  round robin
+	* some optimzations
+	* fixed colour bugs
+	* enlargened local socket send/recv buffer sizes
+	* changed send/receive buffer sizes; some other fixes
+	* camApp rateLimiter
+	* heuristic pixmap mask
+	* performance optimizations
+	* fixed CBuffer class
+	* changed aggregated packet size to be at least 1024 bytes...
+	* removed some output, fixed destId in BBs
+	* updates/fixes include:
+	  - integration of different FEC levels inside packets
+	  - some memory savings
+	  - decision of used FEC levels now made in quantizer only
+	* added some basic handling for fragmented local socket data
+	* pyqt-tc aktualisiert
+	* AppConnector added to camApp
+	* app interface protocoll improved
+	* some integration fixes for vid-BBs
+	* first version of the fancy codec!
+	* Added Settings Dialog to camApp
+	* minor fix in order to handle the absence of the destination ID
+	  more gracefully
+	* added target string to appconnector protocol
+	* redesign determination of broadcast address
+	* added command line option to specify the node's name; fixed some
+	  bugs
+	* added pop/push for buffers
+	* Added payload to CPacket
+	* improved debug, added cmd line options, fixed timer, app quits -
+	  see ticket #15
+	* Python Qt Interface für TC bzw. NetEm hinzugefuegt
+	* loading name/address mappings from resolver.conf
+	* changed addressing in simple architecture from OMNeT node names
+	  to IPv4 addresses plus port
+	* fixes due to CSerialBuffer interface changes
+	* camApp update
+	* debug class updated
+	* Code cleanup
+	* build system update, fixed typos
+	* run methods, build system update, bugfixes
+	* added run()-method for daemon class; added locator type for IPv4
+	* fixed Property issue, ticket #10
+	* ticket #8: unregisterAppConnector
+	* boost UDP netAdapt, systemWrapper, nodeconnector, appConnector
+	* various fixes
+
+2009-08-24 r100
+
+	* some bugs fixed
+	* restructered simple composed Netlets
+	* reference manual updated
+	* some building block skeletons added
+
+2009-08-14 r95
+
+	* added latex reference manual, started with IComposableNetlet
+	* added a preliminary name/addr mapper interface
+
+2009-07-29 r81
+
+	* automized loading of netlets/multiplexers
+	* added two brief tutorials to doxygen main documentation
+	* ChangeLog file added
+
+2009-07-28 r78
+
+	* simple routing example finished so far
+	* some major updates for routing functions in simple architecture
+
+2009-07-24 r75
+
+	* a lot of fixes, introduction of a service id
+	* app interface (tbc)
+	* added camApp
+	* app connector interface (tbc)
+	* small redesign of netadapt handling
+	* Directory cleanup
+
+2009-07-14 r59
+
+	* Major update of message processing interfaces
+	* new message passing interface and unit test
+
+2009-07-08 r54
+
+	* properties testing
+	* morphable value added, extension-libs stripped down
+	* Simple routing started...
+

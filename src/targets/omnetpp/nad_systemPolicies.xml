@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<netprop>
+<systemPolicies>
+
+<requirement id="netprop://channel/security">
+	<name>Security</name>
+	<desc></desc>
+	<weight>0.5</weight>
+
+	<subreqs>
+		<requirement id="netprop://channel/security/ebs">
+			<name>Effective Bit Strength</name>
+			<desc></desc>
+			<weight>1.0</weight>
+		</requirement>
+	</subreqs>
+</requirement>
+
+<requirement id="netprop://channel/qos">
+	<name>Quality of Service</name>
+	<desc></desc>
+	<weight>0.3</weight>
+
+	<subreqs>
+		<requirement id="netprop://channel/qos/latency">
+			<name>Latency</name>
+			<desc></desc>
+			<weight>0.3</weight>
+		</requirement>
+		<requirement id="netprop://channel/qos/jitter">
+			<name>Latency jitter</name>
+			<desc></desc>
+			<weight>0.25</weight>
+		</requirement>
+		<requirement id="netprop://channel/qos/throughput">
+			<name>Throughput</name>
+			<desc></desc>
+			<weight>0.25</weight>
+		</requirement>
+		<requirement id="netprop://channel/qos/overhead">
+			<name>Overhead</name>
+			<desc></desc>
+			<weight>0.2</weight>
+		</requirement>
+	</subreqs>
+</requirement>
+
+<requirement id="netprop://channel/energy">
+	<name>Energy</name>
+	<desc></desc>
+	<weight>0.2</weight>
+
+	<subreqs>
+		<requirement id="netprop://channel/energy/consumption">
+			<name>Energy Consumption</name>
+			<desc></desc>
+			<weight>1.0</weight>
+		</requirement>
+	</subreqs>
+</requirement>
+
+</systemPolicies>
+</netprop>
+

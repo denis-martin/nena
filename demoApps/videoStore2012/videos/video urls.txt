@@ -1,0 +1,9 @@
+http://tm.kit.edu/~backhaus/elephantsdream.webm
+http://tm.kit.edu/~backhaus/sintel.webm
+http://tm.kit.edu/~backhaus/bigbuckbunny.webm
+http://tm.kit.edu/~dmartin/videos/bbb_trailer_small.ogv
+http://tm.kit.edu/~dmartin/videos/elephantsdream_teaser_small.ogv
+http://tm.kit.edu/~dmartin/videos/sintel_trailer_small.ogv
+http://tm.kit.edu/~wippel/videos/bigbuckbunny.mov
+http://tm.kit.edu/~wippel/videos/elephantsdream.mov
+http://tm.kit.edu/~wippel/videos/sintel.mkv

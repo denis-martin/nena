@@ -1,0 +1,11 @@
+
+High-level, name-based network API. While its interface is generic, special
+focus is on NENA support. Other frameworks and network APIs may be added later
+via the plugin system. The NENA plugin, however, is currently directly
+integrated (though it may be separated easily, see posix folder).
+
+TODO: API documentation. For now, refer to 
+
+D. Martin, H. Wippel, H. Backhaus: "A Future-Proof Application-to-Network
+Interface", in Proceedings of the 2011 Second International Conference on the
+Network of the Future (NoF 2011), Paris, France, November 2011.

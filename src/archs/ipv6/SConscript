@@ -1,0 +1,12 @@
+
+Import('env')
+
+#env['LIBS'].append(['itm-demo'])
+#env['LIBPATH'].append(['../../buildingBlocks/edu.kit.tm/itm/demo'])
+
+
+
+Default(env.SharedLibrary('#/build/archs/ipv6multiplexer', [
+	'ipv6Multiplexer.cpp',
+	'#/3rdparty/md5/md5.cpp'
+]))

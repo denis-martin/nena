@@ -1,0 +1,28 @@
+
+Import('env')
+
+bbenv = env.Clone();
+
+bbenv.Append(CCFLAGS = ['-fPIC'])
+
+# includes
+bbenv['CPPPATH'].append([
+	'arq',
+	'traffic',
+	'segment',
+])
+
+staticfiles = [
+	'arq/bb_arqStopAndWait.cpp',
+	'arq/bb_arqGoBackN.cpp',
+	'segment/bb_simpleSegment.cpp',
+#	'traffic/bb_simpleSmooth.cpp',
+#	'traffic/bb_simpleMultiStreamer.cpp'
+]
+
+sharedfiles = list()
+sharedfiles.append(staticfiles)
+sharedfiles.append('loader.cpp')
+
+Default(bbenv.StaticLibrary('itm-transport', staticfiles))
+Default(bbenv.SharedLibrary('itm-transport', sharedfiles))

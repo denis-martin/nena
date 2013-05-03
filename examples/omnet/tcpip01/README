@@ -1,0 +1,9 @@
+
+For this example, you don't need any INET or MF support for NENA. Thus,
+just type
+
+  scons
+  scons omnet
+
+For compiling the simulator version.
+

@@ -1,0 +1,330 @@
+\chapter{Overview}
+\label{ch:classes}
+
+% class definitions
+\begin{empcmds}
+Class.CNetletSelector("CNetletSelector")()();
+
+Class.CNodeArchitecture("CNodeArchitecture")
+	()
+	("+init () : void",
+	"+getNodeName () : string",
+%	"+getNetAdaptBroker () : CNetAdaptBroker*",
+	"+registerAppConnector (appConn) : void",
+	"+lookupService (serviceId) : LocalConnId",
+	"+getRegisteredServices (services) : void",
+%	"+getNetlets (archName, netletList) : void",
+%	"+getMultiplexer (archName) : INetletMultiplexer*"
+	);
+
+Class.CLocalRepository("CLocalRepository")
+	("+multiplexers : list<>",
+	"+netlets : list<>"
+	)
+	(
+	"#loadMultiplexers () : void",
+	"#loadNetlets () : void",
+	"+initialize () : void"
+	);
+
+Class.CNetAdaptBroker("CNetAdaptBroker")
+	("#netAdapts : map<>"
+	)
+	("+registerNetAdapt (netAdapt) : void",
+	"+getNetAdapts(archName) : list<>&"
+	);
+
+AbstractClass.INetAdapt("INetAdapt")
+	()
+	("+getProperty(propertyId) : <>"
+	);
+
+AbstractClass.IAppConnector("IAppConnector")
+	("+identifier : string",
+	"+localConnId : LocalConnId",
+	"+netlet : INetlet*")
+	();
+
+AbstractClass.INameAddrMapper("INameAddrMapper")
+	()
+	("+getPotentialNetlets(name, netletList&) : void"
+	);
+
+\end{empcmds}
+
+
+This is the reference documentation of the node architecture prototype. It will not describe the concepts themselves, only their implementations. For background information about the concepts, please refer to~\cite{1000FutureNetworks}.
+
+The code is pure C++/STL with some use of the Boost libraries (mainly header files). The daemon as well as the example implementations of Netlets etc. are designed to run in multiple target environments, such as Linux, Windows, or OMNeT++.
+
+
+% =============================================================================
+\section{Node Architecture Daemon}
+\label{ch:classes:daemon}
+% =============================================================================
+
+\begin{figure}
+\centering
+\begin{emp}[classdiag](20, 20)
+
+topToBottom(35)(IAppConnector, CNetletSelector, CNodeArchitecture, CNetAdaptBroker);
+leftToRight(35)(CNetletSelector, INameAddrMapper);
+leftToRight(35)(CLocalRepository, CNodeArchitecture);
+leftToRight(35)(CNetAdaptBroker, INetAdapt);
+
+drawObjects(
+	CNetletSelector,
+	CNodeArchitecture,
+	CNetAdaptBroker,
+	CLocalRepository,
+	INetAdapt,
+	IAppConnector,
+	INameAddrMapper);
+
+link(association)(CNodeArchitecture.n -- CNetletSelector.s);
+item(iAssoc)("1")(obj.nw = CNetletSelector.s);
+
+link(association)(CNodeArchitecture.w -- CLocalRepository.e);
+item(iAssoc)("1")(obj.sw = CLocalRepository.e);
+
+link(association)(CNodeArchitecture.s -- CNetAdaptBroker.n);
+item(iAssoc)("1")(obj.sw = CNetAdaptBroker.n);
+
+link(association)(CNetAdaptBroker.e -- INetAdapt.w);
+item(iAssoc)("0..*")(obj.se = INetAdapt.w);
+
+link(association)(CNetletSelector.n -- IAppConnector.s);
+item(iAssoc)("0..*")(obj.ne = IAppConnector.s);
+
+link(association)(CNetletSelector.e -- INameAddrMapper.w);
+item(iAssoc)("0..*")(obj.se = INameAddrMapper.w);
+
+\end{emp}
+\caption{Daemon Class Diagram}
+\label{fig:noanex:classdiagram}
+\end{figure}
+
+The node architecture daemon is the core system that provides the basic components as e.\,g. the repository, the Netlet selector, and the network access broker (see~\cite{1000FutureNetworks}). It interfaces with the system wrapper and it is able to load and instantiate architecture specific multiplexers (\hyperlink{classINetletMultiplexer}{INetletMultiplexer}) and Netlets (\hyperlink{classINetlet}{INetlet}). Both of the latter are compiled as shared libraries, which in turn are loaded by the daemon.
+
+Figure~\ref{fig:noanex:classdiagram} gives an overview on the relavant classes implementing the Node Architecture. Classes are prefixed with "C", interfaces with "I". All classes depicted here are compiled into an object archive (static library). This archive is then linked to wrapper classes provided by the respective target systems to form the final executable.
+
+With target system, we refer to the system environment where the daemon will be run. There are existing targets for the OMNeT++ simulator and UNIX systems supported by boost (the status of the latter is \emph{pending}).
+
+In this chapter, the main implementation decisions are described. For now, it comprises the internal message passing interfaces, the system wrapper classes, and selected utility classes.
+
+
+% =============================================================================
+\section{Message processors}
+\label{ch:classes:processors}
+% =============================================================================
+
+Entities within the node architecture communicate with each other via special message passing interfaces in order to allow for transparent multi-threading (this is work-in-progress).
+The internal message passing interfaces consist of two interface definitions: \hyperlink{classIMessageProcessor}{IMessageProcessor} and \hyperlink{classIMessageScheduler}{IMessageScheduler}.
+A message scheduler manages the input/output queues of one or more message processors. A message processor belongs to exactly one message scheduler at a given time.
+
+A message processor sends its messages always via its associated scheduler. If the destination processor belongs to the same scheduler, the scheduler will enqueue the message for the processor and call it later on. However, if the destination processor belongs to another scheduler, inter-scheduler (and hence, inter-thread) communication is needed. The communication between schedulers is handled by the schedulers. \emph{Note:} These interfaces are \emph{not} intended to provide message passing across different hosts as some existing MPIs do. Figure~\ref{fig:mp:inheritance} shows relevant classes inheriting the \hyperlink{classIMessageProcessor}{IMessageProcessor} interface. Each separate entity doing some message processing is a message processor.
+
+\begin{figure}
+\centering
+\begin{emp}[classdiag](20, 20)
+
+save IAppConnector;
+save INetAdapt;
+save CNetletSelector;
+
+iClass.iName.iFont.name := myfont_narrow;
+iAbstractClass.iName.iFont.name := myfont_narrow_italic;
+
+AbstractClass.IMessageProcessor("IMessageProcessor")
+	("-messageScheduler : IMessageScheduler",
+	"+prev : IMessageProcessor",
+	"+next : IMessageProcessor")
+	("+processEvent (msg) : void",
+	"+processTimer (msg) : void",
+	"+processOutgoing (msg) : void",
+	"+processIncoming (msg) : void");
+
+AbstractClass.IMessageScheduler("IMessageScheduler")()();
+AbstractClass.IAppConnector("IAppConnector")()();
+AbstractClass.INetAdapt("INetAdapt")()();
+AbstractClass.INetlet("INetlet")()();
+AbstractClass.INetletMultiplexer("INetletMultiplexer")()();
+Class.CNetletSelector("CNetletSelector")()();
+
+Class.CAppConnectorOmnet("CAppConnectorOmnet")()();
+Class.COmnetNetAdapt("COmnetNetAdapt")()();
+Class.CSimpleNetlet("CSimpleNetlet")()();
+Class.CSimpleRoutingNetlet("CSimpleRoutingNetlet")()();
+Class.CSimpleMultiplexer("CSimpleMultiplexer")()();
+
+leftToRight(32)(IMessageProcessor, IMessageScheduler);
+topToBottom(32)(IMessageProcessor, INetlet);
+leftToRight(32)(IAppConnector, INetAdapt, INetlet, INetletMultiplexer, CNetletSelector);
+topToBottom(24)(IAppConnector, CAppConnectorOmnet);
+topToBottom(24)(INetAdapt, COmnetNetAdapt);
+topToBottom(24)(INetletMultiplexer, CSimpleMultiplexer);
+
+CSimpleNetlet.ne = below(INetlet.sw, 72);
+leftToRight(32)(CSimpleNetlet, CSimpleRoutingNetlet);
+
+drawObjects(
+	IMessageProcessor,
+	IMessageScheduler,
+	IAppConnector,
+	INetAdapt,
+	INetlet,
+	INetletMultiplexer,
+	CNetletSelector,
+	CAppConnectorOmnet,
+	COmnetNetAdapt,
+	CSimpleNetlet,
+	CSimpleRoutingNetlet,
+	CSimpleMultiplexer);
+
+% kind of a hack...
+hlineOffset := 10;
+link(association)(pathHorizontal(above(IAppConnector.n, hlineOffset), xpart(CNetletSelector.n)));
+link(inheritance)(above(INetlet.n, hlineOffset) -- IMessageProcessor.s);
+link(association)(pathVertical(above(IAppConnector.n, hlineOffset), ypart(IAppConnector.n)));
+link(association)(pathVertical(above(INetAdapt.n, hlineOffset), ypart(INetAdapt.n)));
+link(association)(pathVertical(above(INetlet.n, hlineOffset), ypart(INetlet.n)));
+link(association)(pathVertical(above(INetletMultiplexer.n, hlineOffset), ypart(INetletMultiplexer.n)));
+link(association)(pathVertical(above(CNetletSelector.n, hlineOffset), ypart(CNetletSelector.n)));
+
+link(inheritance)(CAppConnectorOmnet.n -- IAppConnector.s);
+link(inheritance)(COmnetNetAdapt.n -- INetAdapt.s);
+link(inheritance)(CSimpleMultiplexer.n -- INetletMultiplexer.s);
+
+hlineOffset := 10;
+link(association)(pathHorizontal(above(CSimpleNetlet.n, hlineOffset), xpart(CSimpleRoutingNetlet.n)));
+link(inheritance)(above((xpart(INetlet.s), ypart(CSimpleNetlet.n)), hlineOffset) -- INetlet.s);
+link(association)(pathVertical(above(CSimpleNetlet.n, hlineOffset), ypart(CSimpleNetlet.n)));
+link(association)(pathVertical(above(CSimpleRoutingNetlet.n, hlineOffset), ypart(CSimpleRoutingNetlet.n)));
+
+link(association)(IMessageProcessor.e -- IMessageScheduler.w);
+item(iAssoc)("0..*")(obj.sw = IMessageProcessor.e);
+item(iAssoc)("1")(obj.se = IMessageScheduler.w);
+
+\end{emp}
+\caption{Message processors (inheritance tree)}
+\label{fig:mp:inheritance}
+\end{figure}
+
+This concept was mainly introduced to support multi-threading transparently to the message processors: Per thread, a single message scheduler takes care of cross-thread message passing to schedulers running in other threads. Thus, all message processors associated to the same scheduler will run in the same thread. The number of threads can be dynamically chosen depending on the needs or the host system.
+Currently, this feature is not yet implemented fully, so the scheduler essentially calls directly the processing routine of the destination processor. In OMNeT++, schedulers might be represented by different modules to emulate a sort of parallelism.
+
+At least one scheduler implementing \hyperlink{classIMessageScheduler}{IMessageScheduler} must be created for the target system. This is an abstraction for a thread and at least one must be returned by \hyperlink{classISystemWrapper}{ISystemWrapper}::getMainScheduler(). If no real multithreading is implemented (e.g. in a simulator, or a single threaded implementation for real systems like sensor networks), \hyperlink{classCSimpleMsgScheduler}{CSimpleMsgScheduler} can be used as a basis.
+
+An idea, how the messaging interfaces work, can be obtained from the unit test implementation in test/ut-messages/ut-messages.cpp or in the node architecture implementation.
+
+
+% =============================================================================
+\section{System Wrapper}
+\label{ch:noanex:wrapper}
+% =============================================================================
+
+A system wrapper provides the necessary abstractions to access services of the underlying operating system (such as timers, threads, network send/receive, ...). The current implementation focuses on wrappers for OMNeT++ (\hyperlink{classCSystemOmnet}{CSystemOmnet}) and real systems like Linux, BSD, or others where the Boost ASIO library is available (\hyperlink{classCSystemBoost}{CSystemBoost}). In total, a wrapper consists of implementations of several interfaces:
+
+\hyperlink{classISystemWrapper}{ISystemWrapper} -- The \hyperlink{classISystemWrapper}{ISystemWrapper} provides general system information and should be instantiated by the main initialization routine of the target system. It will also instantiate the \hyperlink{classCNodeArchitecture}{CNodeArchitecture} class and will take care of the initialization of the system specific network adaptors and application APIs.
+
+\hyperlink{classINetAdapt}{INetAdapt} -- This interface provides access to a medium where the outgoing messages are sent to (and incoming ones are expected from). At least one implementation of such a Network Access / Network Adaptor must exist. A note on naming: Network Access and Network Adaptor can be used interchangeably
+
+\hyperlink{classIAppConnector}{IAppConnector} -- A system specific application interface can be provided by the system wrapper. The \hyperlink{classIAppConnector}{IAppConnector} serves for interfacing with the node architecture (respectively, the Netlet selector). The interface towards the application can be completely dependent of the host system, but we will develop an enhanced application API that will support all features envisioned by this framework.
+
+\hyperlink{classIMessageScheduler}{IMessageScheduler} -- A scheduler taking care about the message passing between message processors within the local node architecture. This should relate to a thread. At least one implementation must be provided by the target system (representing the main thread).
+
+
+% =============================================================================
+\subsection{OMNeT++ Wrapper}
+\label{ch:noanex:wrapper:omnet}
+
+The OMNeT++ implementation of the system wrapper interfaces consists of the following classes:
+
+\hyperlink{classCSystemOmnet}{CSystemOmnet} -- TBD
+
+\hyperlink{classCOmnetNetAdapt}{COmnetNetAdapt} -- TBD
+
+\hyperlink{classCAppConnectorOmnet}{CAppConnectorOmnet} -- TBD
+
+\hyperlink{classCOmnetScheduler}{COmnetScheduler} -- TBD
+
+
+% =============================================================================
+\subsection{Boost Wrapper}
+\label{ch:noanex:wrapper:boost}
+
+TBD
+
+
+% =============================================================================
+\section{Simple Architecture}
+\label{ch:noanex:simpleArch}
+% =============================================================================
+
+The Simple Architecture is an example architecture and mainly used for testing the concepts. It should be also used to get started with own implementations of Netlets.
+
+\hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer} implements a multiplexer for the "Simple" Netlets. Forwarding of messages is done within the multiplexer. Note, that this is a "design decision" of the simple architecture -- in general, forwarding may also be done within a Netlet.
+
+\hyperlink{classCSimpleNameAddrMapper}{CSimpleNameAddrMapper} implements a name/address mapper for the Simple Architecture. This is not yet complete and should not be regarded too closely.
+
+\hyperlink{classCSimpleComposedNetlet}{CSimpleComposedNetlet} and \hyperlink{classCSimpleMultimediaNetlet}{CSimpleMultimediaNetlet} are examples on how to use building blocks and \hyperlink{classIComposableNetlet}{IComposableNetlet}. This is by no means complete and should not be looked at right now. More will follow soon.
+
+% =============================================================================
+\section{Utilities}
+\label{ch:noanex:util}
+% =============================================================================
+
+This section describes a selection of utility classes used within the Node Architecture.
+
+
+% =============================================================================
+\subsection{Morphable value}
+\label{ch:noanex:util:morph}
+
+\hyperlink{classCMorphableValue}{CMorphableValue} is a base class for various types. It may contain bools, integers, doubles, strings, and ranges (e.\,g. {2 - 42}) and lists (e.\,g. {2, 4, 10}) of those.
+In \hyperlink{classINetAdapt}{INetAdapt}, it is used in conjunction with a std::map<> in order to provide a list of extensible network (access) properties.
+In \hyperlink{classIMessage}{IMessage}, it is used to provide meta data for a message going through the daemon and Netlets.
+
+
+
+% =============================================================================
+\section{Tutorials}
+\label{ch:noanex:tutorials}
+% =============================================================================
+
+This section provides brief tutorials or code-walkthroughs.
+
+% =============================================================================
+\subsection{Getting started}
+\label{ch:noanex:tutorials:gettingstarted}
+
+In this section, we will give a little overview on how things are working together in the Node Architecture. Here, we will only consider the OMNeT implementation, so everything above the Netlet Selector and below the Multiplexer / Network Access Broker will differ a lot for real implementations.
+
+The code within the latest-alpha tag should always compile and produce an OMNeT executable. Please have a look at the README file for instructions on how to compile and run the code.
+
+When running the omnet\_\-na binary, a small demo network with three nodes should be shown (rev78, 2009-07-28). Node n\mbox{[}0\mbox{]} sends periodic ping-requests to node n\mbox{[}2\mbox{]}, which is supposed to answer it. Some additional messages are sent between all nodes to exchange routing information. After the routing information is up-to-date at all nodes, the ping will finally succeed.
+
+When looking at the code, ping is realized as an application in the class \hyperlink{classCPingPong}{CPingPong} (src/targets/omnetpp/apps). Although this class has no OMNeT specific includes, it resides in the OMNeT target directory. The reason for this is, that applications running in a simulator generally don't have any user interaction and are specifically written for traffic generation.
+
+The example application \hyperlink{classCPingPong}{CPingPong} implements the \hyperlink{classIAppConnector}{IAppConnector} interface. This application connector interface class has a proxy role when communicating with the application. Since the application and the Node Architecture are in the same executable for simulators, \hyperlink{classCPingPong}{CPingPong} may just implement it directly.
+
+\hyperlink{classIAppConnector}{IAppConnector} itself inherits from \hyperlink{classIMessageProcessor}{IMessageProcessor} which is a base class for all message processing entities within the Node Architecture. \hyperlink{classINetlet}{INetlet}, \hyperlink{classINetletMultiplexer}{INetletMultiplexer} etc. will all inherit from this.
+
+When \hyperlink{classCPingPong}{CPingPong} is created, it sets a timeout upon which it will send its first ping-request. This message will be sent to the \hyperlink{classCNetletSelector}{CNetletSelector} which, for the time being, is hard-wired to \hyperlink{classCSimpleNetlet}{CSimpleNetlet}. \hyperlink{classCSimpleNetlet}{CSimpleNetlet} \char`\"{}provides\char`\"{} some transport functionalities, which essentially means that it adds a header to identify the application that sent the message. After that, it just hands it over to the \hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer}.
+
+\hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer} adds addressing information to the packet and realizes basic forwarding mechanisms. Note, that this is a decision of the \char`\"{}Simple Architecture\char`\"{}. Forwarding may also be realized within Netlets, if this is desired. For forwarding, the \hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer} has a very simple forwarding information base (FIB), which is maintained by the \hyperlink{classCSimpleRoutingNetlet}{CSimpleRoutingNetlet}.
+
+The \hyperlink{classCSimpleRoutingNetlet}{CSimpleRoutingNetlet} is a so-called control Netlet, which means that there is no application associated with it and that it runs on its own in the Node Architecture. It sends some route information exchange (RIX) messages via the known network adaptors / accesses and collects any incoming RIX messages. Based on these messages, the FIB of the \hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer} is updated. Note, that this is a very simple mechanism. It will suffer from many well-known routing problems and it won't select the best route, just any route.
+
+The \hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer} selects the \hyperlink{classINetAdapt}{INetAdapt} via which the outgoing messages are sent. Either it uses its FIB, or the emitting entity (application, Netlet) has already chosen the \hyperlink{classINetAdapt}{INetAdapt} to use (as, e.g., the \hyperlink{classCSimpleRoutingNetlet}{CSimpleRoutingNetlet} does).
+
+The \hyperlink{classINetAdapt}{INetAdapt} interface is implemented in \hyperlink{classCOmnetNetAdapt}{COmnetNetAdapt}, which basically maps the network adaptor to an OMNeT port.
+
+% =============================================================================
+\subsection{Creating an own Control Netlet}
+\label{ch:noanex:tutorials:ctrlnetlet}
+
+To create an own Control Netlet (i.\,e., a Netlet not associated to any user application), the best thing is to start with \hyperlink{classCSimpleRoutingNetlet}{CSimpleRoutingNetlet} and to construct it on top of the \hyperlink{classCSimpleMultiplexer}{CSimpleMultiplexer}. So, just copy the two files of \hyperlink{classCSimpleRoutingNetlet}{CSimpleRoutingNetlet} and name them appropriately (e.g. simpleControlNetlet.(h$|$cpp)). Edit the SConscript file and add an entry for the new Netlet. Go into the two class files and rename everything that is related to the `Simple Routing' to your new name. Be sure, to also rename its ID (i.e., the string in SIMPLE\_\-ROUTING\_\-NETLET\_\-NAME).
+
+After you did all those changes and renaming, it should compile and create a new shared library in build/targets/netlets. When running the OMNeT simulation, it should also be instantiated automatically.
+

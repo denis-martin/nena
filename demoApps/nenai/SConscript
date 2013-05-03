@@ -1,0 +1,50 @@
+import os
+import re
+import subprocess
+from subprocess import Popen, PIPE
+
+Import('env')
+
+nenaiEnv = env.Clone()
+
+nenaiEnv['CPPFLAGS'] = ['-fPIC']
+
+# needed for gcc 4.6 and boost 1.42
+#nenaiEnv.Append(CCFLAGS = ['-fpermissive'])
+
+####### Link libraries #######
+
+libraries = [
+	'nodc',
+	'phtread',
+]
+
+####### Boost libraries #######
+
+libraries_boost = [
+	'boost_system',
+	'boost_thread'
+]
+
+libraries_boost_mt = [
+	'boost_system-mt', 
+	'boost_thread-mt'
+]
+
+out, err = Popen ('/sbin/ldconfig -p', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+
+mt = re.findall (r'.*libboost_system-mt.*', out)
+st = re.findall (r'.*libboost_system.*', out)
+
+if len(mt) <> 0:
+	libraries.append(libraries_boost_mt)
+elif len (st) <> 0:
+	libraries.append(libraries_boost)
+
+####### Targets #######
+
+Default (nenaiEnv.StaticLibrary('nenai', [
+	'socketNenai.cpp',
+	'memNenai.cpp',
+	'nenai.cpp'
+]))

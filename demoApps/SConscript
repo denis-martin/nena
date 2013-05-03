@@ -1,0 +1,14 @@
+
+Import('env')
+
+env.SConscript('nenai/SConscript')
+env.SConscript('tmnet/SConstruct')
+
+# needs to be fixed
+#env.SConscript('adminShell/SConscript')
+
+#env.SConscript('trafficGenerator/SConscript')
+
+env.SConscript('perf-test/SConscript')
+env.SConscript('pingPong/SConscript')
+

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Test XML file (this was part of a graphical chat room application) -->
+
+<char:chatroom 
+	bgimage="dlr-europa.png"
+	fieldwidth="16"
+	fieldheight="16">
+	
+<terrain src="dlr-europa-grid.png">
+	<!-- land -->
+	<terraincolor type="0">#FFFFFF</terraincolor>
+	
+	<!-- water -->
+	<terraincolor type="1">#000000</terraincolor>
+</terrain>
+
+<messages>
+	<terrainborder from="0" to="1">There is water! Order a ship!</terrainborder>
+	<terrainborder from="1" to="0">Land in sight! You have to go anchor and land!</terrainborder>
+</messages>
+
+<treasures>
+	<!-- Moscow (Russia) -->
+	<treasure x="104" y="39" r="1" img="homes/house.png" name="Moscow" score="2">
+		<message>%1 discovered a small village called Moscow! The natives offered :him: a drink that was crystal clear like water. За твоë здоровье!</message>
+	</treasure>
+	
+	<!-- Cracow (Poland) -->
+	<treasure x="78" y="61" r="1" img="homes/house.png" name="Cracow" score="2">
+		<message>%1 traverses the beer/vodka border... Na zdrowie!</message>
+	</treasure>
+	
+	<!-- Munich (Germany) -->
+	<treasure x="63" y="67" r="1" img="homes/house.png" name="Munich" score="1">
+		<message>%1 tasted a marvalous drink in Munich. The natives there call it "Freibier". And the best of it: it was for free! Prost!</message>
+	</treasure>
+	
+	<!-- Turku (Finland) -->
+	<treasure x="79" y="32" r="1" img="homes/igloo.png" name="Turku" score="3">
+		<message>%1 tasted some Salmiakki vodka in Turku. It was horrible! - Kippis!</message>
+	</treasure>
+	
+	<!-- Uppsala (Sweden) -->
+	<treasure x="72" y="34" r="1" img="homes/igloo.png" name="Uppsala" score="2">
+		<message>Uppsala! %1 discovered natives that offered :him: an absolut drink - Skål!</message>
+	</treasure>
+	
+	<!-- London (England) -->
+	<treasure x="44" y="56" r="1" img="homes/house.png" name="London" score="1">
+		<message>%1 whished to have brought some coke along 'cause the whiskey in London was a bit too strong - Cheers!</message>
+	</treasure>
+	
+	<!-- Cork (Ireland) -->
+	<treasure x="30" y="51" r="1" img="homes/house.png" name="Cork" score="2">
+		<message>%1 entered a pub in an old village. The cider was fine but a bit too sweet - Slàinte!</message>
+	</treasure>
+	
+	<!-- The Gauls (France) -->
+	<treasure x="35" y="63" r="0" img="homes/house.png" name="The Gauls" score="1">
+		<message>%1 met some crazy Gauls! But they didn't let :him: taste their magic drink :(</message>
+	</treasure>
+	
+	<!-- Lyon (France) -->
+	<treasure x="50" y="73" r="1" img="homes/wine.png" name="Lyon" score="1">
+		<message>%1 tasted some Nouveau Beaujolais - it was not the best wine, but it was cheap! Santé!</message>
+	</treasure>
+	
+	<!-- Tallinn (Estonia) -->
+	<treasure x="83" y="35" r="1" img="homes/house.png" name="Tallinn" score="3">
+		<message>%1 got some Saku Lager in an Estonian pub - not bad, :he: thought. Terviseks!</message>
+	</treasure>
+	
+	<!-- Reykjavik (Iceland) -->
+	<treasure x="26" y="12" r="1" img="homes/igloo.png" name="Reykjavik" score="3">
+		<message>%1 first thought that the geysers in Iceland were hot. But then, :he: tasted Brennivín, a liquor also called Black Death... Skál!</message>
+	</treasure>
+	
+	<!-- Trondheim (Norway) -->
+	<treasure x="63" y="25" r="1" img="homes/igloo.png" name="Trondheim" score="2">
+		<message>%1 never thought that potatoes and caraway seeds could knock a person under the table.  Akevitt or the Water of Life did so - Skål!</message>
+	</treasure>
+	
+	<!-- Oulu (Finland) -->
+	<treasure x="81" y="19" r="1" img="homes/igloo.png" name="Oulu" score="3">
+		<message>After a really warming (or better: burning) sauna in Oulu, %1 tasted some Terva Snapsi - it tasted like tarry wood!</message>
+	</treasure>
+	
+	<!-- Athens (Greece) -->
+	<treasure x="89" y="93" r="1" img="homes/house.png" name="Athens" score="1">
+		<message>%1 had some good Ouzo in Athens - Στη γεια σου!</message>
+	</treasure>
+	
+	<!-- Naples (Italy) -->
+	<treasure x="69" y="86" r="1" img="homes/house.png" name="Naples" score="1">
+		<message>%1 don't know what :he: liked more in Naples: the Chianti or the Italian temper - Salute!</message>
+	</treasure>
+	
+	<!-- Palma de Mallorca (Spain) -->
+	<treasure x="44" y="89" r="0" img="homes/house.png" name="Palma de Mallorca" score="1">
+		<message>%1 felt a bit like in Munich - but the Spanish beer and the warm Mediterranean convinced :him: well that he was not in Germany. Pros..., ehm, Salud!</message>
+	</treasure>
+	
+	<!-- Istanbul (Turkey) -->
+	<treasure x="99" y="83" r="0" img="homes/house.png" name="Istanbul" score="1">
+		<message>%1 had a turkish coffee. Now :he: felt like that :he: could explore the whole near and far orient without sleeping!</message>
+	</treasure>
+	
+	<!-- Sevilla (Spain) -->
+	<treasure x="24" y="92" r="1" img="homes/house.png" name="Sevilla" score="2">
+		<message>%1 couldn't hardly leave Sevilla: all those Spanish festivals and the Spanish Cherry... Salud!</message>
+	</treasure>
+	
+	<!-- Gizeh (Egypt) -->
+	<treasure x="110" y="113" r="1" img="homes/house.png" name="Gizeh" score="2">
+		<message>%1 wondered if anyone has ever thought about transplanting a nose - the Sphinx would look far better if it had one.</message>
+	</treasure>
+	
+	<!-- Algiers (Algeria) -->
+	<treasure x="44" y="97" r="1" img="homes/house.png" name="Algiers" score="3">
+		<message>It was really hot in Algiers! Luckily some friendly inhabitants offered :him: a refreshing, golden-coloured mint tea. Fisehatak!</message>
+	</treasure>
+</treasures>
+
+<countries>
+	<country name="Algeria">
+		<positions>
+			<position x="36" y="102"></position>
+			<position x="45" y="103"></position>
+			<position x="51" y="105"></position>
+		</positions>
+	</country>
+	
+	<country name="Finland">
+		<positions>
+			<position x="82" y="16"></position>
+			<position x="78" y="26"></position>
+			<position x="84" y="30"></position>
+		</positions>
+	</country>
+	
+	<country name="France">
+		<positions>
+			<position x="52" y="79"></position>
+			<position x="39" y="65"></position>
+			<position x="49" y="64"></position>
+		</positions>
+	</country>
+	
+	<country name="Germany">
+		<positions>
+			<position x="61" y="52"></position>
+			<position x="65" y="55"></position>
+			<position x="62" y="64"></position>
+		</positions>
+	</country>
+	
+	<country name="Greece">
+		<positions>
+			<position x="86" y="95"></position>
+			<position x="84" y="87"></position>
+			<position x="89" y="85"></position>
+		</positions>
+	</country>
+	
+	<country name="Italy">
+		<positions>
+			<position x="61" y="74"></position>
+			<position x="66" y="82"></position>
+			<position x="73" y="87"></position>
+		</positions>
+	</country>
+	
+	<country name="Marocco">
+		<positions>
+			<position x="24" y="98"></position>
+			<position x="14" y="106"></position>
+			<position x="29" y="105"></position>
+		</positions>
+	</country>
+	
+	<country name="Norway">
+		<positions>
+			<position x="58" y="38"></position>
+			<position x="68" y="15"></position>
+			<position x="77" y="6"></position>
+		</positions>
+	</country>
+	
+	<country name="Poland">
+		<positions>
+			<position x="71" y="51"></position>
+			<position x="78" y="52"></position>
+			<position x="74" y="58"></position>
+		</positions>
+	</country>
+	
+	<country name="Portugal">
+		<positions>
+			<position x="19" y="90"></position>
+			<position x="21" y="82"></position>
+			<position x="23" y="80"></position>
+		</positions>
+	</country>
+	
+	<country name="Russia">
+		<positions>
+			<position x="89" y="8"></position>
+			<position x="103" y="49"></position>
+			<position x="119" y="33"></position>
+		</positions>
+	</country>
+
+	<country name="Spain">
+		<positions>
+			<position x="24" y="76"></position>
+			<position x="30" y="91"></position>
+			<position x="38" y="82"></position>
+		</positions>
+	</country>
+	
+	<country name="Sweden">
+		<positions>
+			<position x="67" y="46"></position>
+			<position x="73" y="34"></position>
+			<position x="74" y="18"></position>
+		</positions>
+	</country>
+	
+	<country name="Turkey">
+		<positions>
+			<position x="96" y="82"></position>
+			<position x="110" y="87"></position>
+			<position x="113" y="79"></position>
+		</positions>
+	</country>
+	
+	<country name="Ukraine">
+		<positions>
+			<position x="100" y="66"></position>
+			<position x="91" y="58"></position>
+			<position x="102" y="55"></position>
+		</positions>
+	</country>
+</countries>
+
+<languages>
+	<language name="Croatian"></language>
+	<language name="Czech"></language>
+	<language name="Danish"></language>
+	<language name="Dutch"></language>
+	<language name="English"></language>
+	<language name="Estonian"></language>
+	<language name="Finnish"></language>
+	<language name="French"></language>
+	<language name="German"></language>
+	<language name="Greek"></language>
+	<language name="Irish"></language>
+	<language name="Italian"></language>
+	<language name="Latvian"></language>
+	<language name="Norwegian"></language>
+	<language name="Polish"></language>
+	<language name="Portuguese"></language>
+	<language name="Romanian"></language>
+	<language name="Russian"></language>
+	<language name="Spanish"></language>
+	<language name="Swedish"></language>
+	<language name="Turkish"></language>	
+	<language name="Welsh"></language>	
+	<language name="Yiddish"></language>	
+</languages>
+	
+</char:chatroom>

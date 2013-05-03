@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<netprop>
+
+<netletProperties id="netlet://edu.kit.tm/itm/simpleArch/SimpleNetlet">
+
+	<property id="netprop://channel/security">
+		<name>Security</name>
+		<desc></desc>
+		<value>0</value>
+
+<!--
+		<subprops>
+			<property id="netprop://channel/security/ebs">
+				<name>Effective Bit Strength</name>
+				<desc></desc>
+				<value>1.0</value>
+			</property>
+		</subprops>
+-->
+	</property>
+
+	<property id="netprop://channel/qos">
+		<name>Quality of Service</name>
+		<desc></desc>
+		<value>0.3</value>
+
+		<subprops>
+			<property id="netprop://channel/qos/latency">
+				<name>Latency</name>
+				<desc>Processing time in milliseconds</desc>
+				<value>5</value>
+			</property>
+			<property id="netprop://channel/qos/jitter">
+				<name>Latency jitter</name>
+				<desc>In milliseconds</desc>
+				<value>2</value>
+			</property>
+<!--
+			<property id="netprop://channel/qos/throughput">
+				<name>Throughput</name>
+				<desc></desc>
+				<value>0.25</value>
+			</property>
+-->
+			<property id="netprop://channel/qos/overhead">
+				<name>Overhead</name>
+				<desc>Overhead in bytes</desc>
+				<value>4</value>
+			</property>
+		</subprops>
+	</property>
+
+	<property id="netprop://channel/energy">
+		<name>Energy</name>
+		<desc></desc>
+
+		<subprops>
+			<property id="netprop://channel/energy/consumption">
+				<name>Energy Consumption</name>
+				<desc>In mW</desc>
+				<value>10</value>
+			</property>
+		</subprops>
+	</property>
+
+</netletProperties>
+
+</netprop>
+

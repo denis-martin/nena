@@ -1,0 +1,118 @@
+<!doctype html>  
+<html lang="de">  
+  <head>  
+    <meta charset="utf-8">  
+    <title>NENA enabled Video on Demand</title>  
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript">
+
+function clicked_bbb() {
+  video = document.getElementsByTagName("video")[0];
+  video.getElementsByTagName("source")[0].src = "videos/bbb_trailer_small.ogv";
+  video.load();
+  var watchnow  = "nenavideo://kit.streamserver/videos/bigbuckbunny.webm";
+  var download = "nenacdn://kit.videostore/videos/bigbuckbunny.mov";
+  document.getElementById("bigbuckbunny").style.display = "block";
+  document.getElementById("elephantsdream").style.display = "none";
+  document.getElementById("sintel").style.display = "none";
+  document.getElementById("watchnow").href = watchnow;
+  document.getElementById("watchnowurl").innerHTML = watchnow;
+  document.getElementById("download").href = download;
+  document.getElementById("downloadurl").innerHTML = download;
+}
+
+function clicked_ed() {
+  video = document.getElementsByTagName("video")[0];
+  video.getElementsByTagName("source")[0].src = "videos/elephantsdream_teaser_small.ogv";
+  video.load();
+  var watchnow  = "nenavideo://kit.streamserver/videos/elephantsdream.webm";
+  var download = "nenacdn://kit.videostore/videos/elephantsdream.mov";
+  document.getElementById("bigbuckbunny").style.display = "none";
+  document.getElementById("elephantsdream").style.display = "block";
+  document.getElementById("sintel").style.display = "none";
+  document.getElementById("watchnow").href = watchnow;
+  document.getElementById("watchnowurl").innerHTML = watchnow;
+  document.getElementById("download").href = download;
+  document.getElementById("downloadurl").innerHTML = download;
+}
+
+function clicked_sintel() {
+  video = document.getElementsByTagName("video")[0];
+  video.getElementsByTagName("source")[0].src = "videos/sintel_trailer_small.ogv";
+  video.load();
+  var watchnow  = "nenavideo://kit.streamserver/videos/sintel.webm";
+  var download = "nenacdn://kit.videostore/videos/sintel.mkv";
+  document.getElementById("bigbuckbunny").style.display = "none";
+  document.getElementById("elephantsdream").style.display = "none";
+  document.getElementById("sintel").style.display = "block";
+  document.getElementById("watchnow").href = watchnow;
+  document.getElementById("watchnowurl").innerHTML = watchnow;
+  document.getElementById("download").href = download;
+  document.getElementById("downloadurl").innerHTML = download;
+}
+
+    </script>
+  </head>  
+  <body onload="javascript:clicked_ed();">
+    <div id="wrap">
+      <div id="header">
+        <a href="#">
+          <h1>NENA enabled Video on Demand</h1>
+        </a>
+      </div>
+      <div id="main">
+        <a href="javascript:clicked_ed();">
+          <img src="images/elephantsdream.png" width="196" height="240"  />
+        </a>
+        <a href="javascript:clicked_bbb();">
+          <img src="images/bigbuckbunny.png" width="196" height="240" />
+        </a>
+        <a href="javascript:clicked_sintel();">
+          <img src="images/sintel.png" width="196" height="240"  />
+        </a>
+      </div>
+      <div id="description">
+        <div id="elephantsdream" class="hiddenContainer">
+          <h2>Elephants Dream</h2>
+            <p>Elephants Dream (code-named Orange) is a short computer-generated short film that was produced almost completely using the free software 3D suite Blender (except for the modular sound studio Reaktor and the cluster that rendered the final production, which ran Mac OS X). It premiered on March 24, 2006, after about 8 months of work.
+<!--              Elephants Dream ist ein surrealer, computer-generierter Kurzfilm, der fast ausschließlich mit freier Software erstellt und unter einer freien Creative-Commons-Lizenz veröffentlicht wurde. Aufgrund der positiven Reaktionen sowie den Erfahrungen aus diesem Projekt, wurde am 10. April 2008 ein zweiter Film unter Creative-Commons-Lizenz veröffentlicht: Big Buck Bunny. Die Sprache des Filmes ist Englisch, es gibt allerdings Untertitel in über 30 Sprachen. -->
+            </p>
+            <p>The movie was made mostly as an experiment, rather than to tell a certain story, and therefore has a strong arbitrary and surreal atmosphere. It features two men, Proog, who is older and more experienced, and Emo, who is young and nervous, living in a miraculous construction referred to only as "The Machine"... <!--Proog tries to introduce Emo to The Machine's nature but Emo is reluctant and argues about The Machine's purpose. The creators originally intended for the movie to show the abstraction of a computer.-->
+<!--              Der Film spielt ausnahmslos in einer riesigen surrealen Maschine, einer Traumwelt. Der alte Mann Proog führt den jungen Emo durch eine Maschine. Der Zuschauer sieht diesen Rundgang aus den Augen Proogs, welcher dabei offensichtlich unter heftigen Wahnvorstellungen leidet, aber stets sicher und erfahren wirkt, während Emo hingegen ängstlich wirkt und immer nahe bei Proog bleibt. Die beiden gehen durch mehrere immer unterschiedlich aussehende Räume der Maschine, die meistens keinen Übergang zueinander haben und Proogs abstrakte Halluzinationen darstellen. -->
+            </p>
+        </div>
+        <div id="bigbuckbunny" class="hiddenContainer">
+          <h2>Big Buck Bunny</h2>
+          <p>Big Buck Bunny (code-named Peach) is a short computer animated film by the Blender Institute, part of the Blender Foundation. Like the foundation's previous film Elephants Dream, the film was made using Blender, a free software application for animation. <!-- made by the same foundation.-->
+<!--            Big Buck Bunny ist ein computer-generierter Kurzfilm, der hauptsächlich unter Verwendung von freier Software hergestellt wurde, insbesondere der 3D-Grafiksoftware Blender. Sowohl der fertige Film als auch die Produktionsmaterialien wie Animationsdaten, Charaktere und Texturen wurden am 30. Mai 2008 unter der freien Creative-Commons-Namensnennungs-Lizenz veröffentlicht. Bei der Ankündigung des Films wurde er als „funny and furry“ (witzig und pelzig) beschrieben, was vor allem durch Slapstick-Komik erreicht wird. -->
+          </p>
+          <p>The plot follows a day of the life of Big Buck Bunny when he meets three bullying rodents, Frank (the leader of the rodents), Rinky and Gamera. The rodents amuse themselves by harassing helpless creatures of the forest by throwing fruits, nuts and rocks at them.
+After the deaths of two of Bunny's favorite butterflies, and an offensive attack on Bunny himself, Bunny sets aside his gentle nature and orchestrates a complex plan to avenge the two butterflies...
+<!--            Der Hauptcharakter ist ein ungewöhnlich großes und fülliges Kaninchen („Big Buck Bunny“), das sich zu Beginn des Films an Blumen und Schmetterlingen erfreut. Als jedoch das Flughörnchen Frank, das Eichhörnchen Rinky und das Chinchilla Gamera auftauchen, zwei Schmetterlinge töten und das Kaninchen mit Früchten und Nüssen bewerfen, beschließt es, seine Sanftmütigkeit abzulegen und an den Nagetieren Rache zu nehmen. Dazu baut es verschiedene Fallen auf. -->
+          </p>
+        </div>
+        <div id="sintel" class="hiddenContainer">
+          <h2>Sintel</h2>
+            <p>Sintel (code-named Durian) is a short computer animated film by the Blender Institute, part of the Blender Foundation. Like the foundation's previous films Elephants Dream and Big Buck Bunny, the film was made using Blender, a free software application for animation created and supported by the same foundation. Sintel was produced by Ton Roosendaal, chairman of the Foundation, and directed by Colin Levy, an artist at Pixar Animation Studios.
+<!--              Sintel ist ein computergenerierter Kurzfilm, der im Rahmen des Filmprojektes Durian entstanden ist. Dieses Projekt wurde durch die Blender Foundation finanziert und dient der Weiterentwicklung und Erprobung freier Software, insbesondere der 3D-Grafiksoftware Blender. Die Premiere des Films fand am 27. September 2010 auf dem Niederländischen Filmfestival statt.[1] Außerdem war Sintel auf der SIGGRAPH Asien 2010 zu sehen. Der Name Sintel leitet sich vom niederländischem Wort „sintel“ ab und bedeutet wörtlich Schlacke. In einer englischen Erklärung wird die Bedeutung „Glut“ nahegelegt. -->
+            </p>
+            <p>The film begins with a woman, Sintel, being attacked while travelling through a wintery mountainside. After defeating her attacker and taking his spear, she finds refuge in a shaman's hut...
+<!--He asks her why she's travelling, and she confesses she's looking for a dragon, leading into a flashback. Sintel was a homeless loner, looking for food when she discovered an injured baby dragon. She nursed him back to health and named Scales, the two quickly formed an emotional bond. One day while Scales was flying he was captured by an adult dragon. Determined to get him back, Sintel began the long and dangerous journey that led her to the shaman's hut...-->
+<!--              Der Film beginnt mit dem Überfall eines Drachentöters auf die durch eine verschneite Landschaft streifende, junge, weibliche Protagonistin Sintel. Bei dem Überfall scheint sie ihrem Angreifer unterlegen zu sein, kann jedoch seinen Speerattacken ausweichen und ihn mit ihrem Messer verwunden, wodurch er seinen Speer fallen lässt. Als er daraufhin mit ihrem Messer auf sie zuläuft, kann sie den Speer nehmen und ihn in seinen Bauch rammen, der dadurch getötet wird. Nach dem Überfall entdeckt sie eine kleine Hütte, woraufhin sie auf sie zuläuft. Sintel ist jedoch durch die Strapazen und den Überfall so geschwächt, dass sie nach einigen Schritten erschöpft im Schnee liegen bleibt und bewusstlos wird. -->
+            </p>
+        </div>
+      </div>
+      <div id="sidebar">
+        <video id="trailerbox" autoplay="autoplay" loop="loop" width="300">
+          <source src="" />
+        </video>
+      </div>
+      <div id="bottombar">
+        <a href="#" id="watchnow" class="button">Watch now!<br />
+          <span id="watchnowurl" class="nenaurl">nenavideo://</span></a>
+        <a href="#" id="download" class="button">Download<br />
+          <span id="downloadurl" class="nenaurl">nenacdn://</span></a>
+      </div>
+    </div>
+  </body>  
+</html>

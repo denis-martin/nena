@@ -1,0 +1,59 @@
+
+import os
+
+Import('env')
+
+netletenv = env.Clone();
+
+netletenv['LIBS'].append([
+#	'itm-demo',
+	'itm-sig',
+	'itm-transport',
+#	'itm-crypt',
+#	'itm-reliable',
+#	'cryptopp'
+])
+
+netletenv['LIBPATH'].append([
+#	'#/build/buildingBlocks/edu.kit.tm/itm/demo',
+	'#/build/buildingBlocks/edu.kit.tm/itm/sig',
+	'#/build/buildingBlocks/edu.kit.tm/itm/transport',
+#	'#/build/buildingBlocks/edu.kit.tm/itm/crypt',
+#	'#/build/buildingBlocks/edu.kit.tm/itm/reliable',
+])
+
+### simple unreliable transport
+
+Default(netletenv.SharedLibrary('#/build/netlets/simplenetlet', ['simpleNetlet.cpp']))
+Default(netletenv.SharedLibrary(
+	'#/build/netlets/simpletransportnetlet',
+	['simpleComposedNetlet.cpp', 'simpleTransportNetlet.cpp'], 
+))
+
+### simple reliable transport
+
+Default(netletenv.SharedLibrary(
+	'#/build/netlets/simplereliabletransportnetlet', 
+	['simpleComposedNetlet.cpp', 'simpleReliableTransportNetlet.cpp'], 
+))
+
+### simple routing
+
+Default(netletenv.SharedLibrary('#/build/netlets/simpleroutingnetlet', ['simpleRoutingNetlet.cpp']))
+
+
+### not used / outdated ######################################################
+
+
+### reliable transport based on finegranular BBs
+
+#Default(env.SharedLibrary('#/build/netlets/dyntatcpnetlet', ['simpleComposedNetlet.cpp', 'dyntaTcpNetlet.cpp']))
+
+### simple video streaming
+
+#Default(env.SharedLibrary('#/build/netlets/simplevideotransportnetlet', ['simpleComposedNetlet.cpp', 'simpleVideoTransportNetlet.cpp']))
+#Default(env.SharedLibrary('#/build/netlets/simplevideotransportwithfecnetlet', ['simpleComposedNetlet.cpp', 'simpleVideoTransportWithFecNetlet.cpp']))
+
+### encryption netlet
+
+#Default(netletenv.SharedLibrary('#/build/netlets/crypttestnetlet', ['simpleComposedNetlet.cpp', 'cryptTestNetlet.cpp']))

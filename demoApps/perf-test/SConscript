@@ -1,0 +1,53 @@
+import os
+import re
+import subprocess
+from subprocess import Popen, PIPE
+
+Import('env')
+
+####### Link libraries #######
+
+libs_nenai = [
+	'nenai',
+]
+
+libs_tmnet = [
+    'tmnet',
+]
+
+####### Boost libraries #######
+
+libraries_boost = [
+	'boost_system',
+	'boost_thread',
+	'boost_program_options'
+]
+
+libraries_boost_mt = [
+	'boost_system-mt', 
+	'boost_thread-mt',
+	'boost_program_options-mt'
+]
+
+out, err = Popen ('/sbin/ldconfig -p', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+
+mt = re.findall (r'.*libboost_system-mt.*', out)
+st = re.findall (r'.*libboost_system.*', out)
+
+if len(mt) <> 0:
+	libs_nenai.append(libraries_boost_mt)
+	libs_tmnet.append(libraries_boost_mt)
+elif len(st) <> 0:
+	libs_nenai.append(libraries_boost)
+	libs_tmnet.append(libraries_boost)
+else:
+	print "\n*** Unable to find boost libraries."
+	print "*** Please check your installation.\n"
+	exit(1)
+
+####### Targets #######
+
+Default(env.Program('perf_tmnet', ['main_tmnet.cpp'],
+            LIBS=libs_tmnet,
+            LIBPATH=['../tmnet']))
+

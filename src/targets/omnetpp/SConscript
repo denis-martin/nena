@@ -1,0 +1,262 @@
+
+# omnet_na - Node Architecture in OMNeT++ v4.0
+
+Import('env')
+omnetEnv = env.Clone()
+
+import os
+import platform
+import re
+import string
+from subprocess import Popen, PIPE
+
+# we'll need it
+def grep(string, list):
+    expr = re.compile(string)
+    return [elem for elem in list if expr.match(elem)]
+
+####### OMNeT++ #######
+
+# get content of omnet's Makefile.inc
+omnetConfigFilepath = os.popen('opp_configfilepath')
+omnetConfigFile = omnetConfigFilepath.read()[:-1]
+if omnetConfigFilepath.close() != None:
+	print "\n*** Command opp_configfilepath not found. Please add the bin directory of your"
+	print "*** OMNeT++ v4 installation to your $PATH variable.\n"
+	exit(1)
+omnetConfig = open(omnetConfigFile, 'r').read().split('\n')
+
+omnetRoot = grep('^OMNETPP_ROOT = (.*)', omnetConfig).pop(0).replace('OMNETPP_ROOT = ', '')
+omnetIncludes = grep('^OMNETPP_INCL_DIR = (.*)', omnetConfig).pop(0).replace('OMNETPP_INCL_DIR = ', '')
+omnetLibDir = grep('^OMNETPP_LIB_DIR = (.*)', omnetConfig).pop(0).replace('OMNETPP_LIB_DIR = ', '')
+
+####### INET framework #######
+
+# set this to True if you want to run the examples with the INET framework
+# NOTE: you also have to set the path to the INET framework
+useInetFramework = False
+inetFrameworkPath = omnetRoot + "/inet-framework"
+
+####### INET MANET framework #######
+
+# set this to True if you want to run the examples with the INETMANET fork
+# NOTE: you also have to set the path to the INETMANET folder
+useInetManet = False
+inetManetPath = omnetRoot + "/inetmanet"
+
+####### Mobility framework #######
+
+# set this to True if you want to run the examples with the MF2 support
+# NOTE: you also have to set the path to the MF2 folder
+useMf2 = False
+mf2Path = omnetRoot + "/mf2"
+
+####### Some checks for the various addon libs #######
+
+if ARGUMENTS.get('inet', 0):
+	useInetFramework = True
+
+if ARGUMENTS.get('inetmanet', 0):
+	useInetManet = True
+	
+if ARGUMENTS.get('mf2', 0):
+	useMf2 = True
+	
+if (useInetFramework and useInetManet) or (useInetFramework and useMf2) or (useInetManet and useMf2):
+	print "\n*** Cannot use INET framework, INETMANET fork, or MF2 support at the same time.\n"
+	exit(1)
+
+if useInetFramework and not os.path.exists(inetFrameworkPath):
+	print "\n*** Attempting to use INET framework, but path to INET framework invalid:"
+	print "*** " + inetFrameworkPath
+	print "*** Please set a symbolic link to the aforementioned directory, or change"
+	print "*** the variable inetFrameworkPath in targets/omnet/SConscript according"
+	print "*** to your installation.\n"
+	exit(1)
+
+if useInetManet and not os.path.exists(inetManetPath):
+	print "\n*** Attempting to use INETMANET fork, but path to INETMANET fork invalid:"
+	print "*** " + inetManetPath
+	print "*** Please set a symbolic link to the aforementioned directory, or change"
+	print "*** the variable inetManetPath in targets/omnet/SConscript according"
+	print "*** to your installation.\n"
+	exit(1)
+	
+if useMf2 and not os.path.exists(mf2Path):
+	print "\n*** Attempting to use MF2 support, but path to MF2 invalid:"
+	print "*** " + mf2Path
+	print "*** Please set a symbolic link to the aforementioned directory, or change"
+	print "*** the variable mf2Path in targets/omnet/SConscript according"
+	print "*** to your installation.\n"
+	exit(1)
+
+####### Link libraries #######
+
+libraries_dbg = [
+	'pthread',
+	'nad',
+	# omnet libs
+	'opptkenvd',
+	'oppenvird',
+	'opplayoutd',
+	'oppcmdenvd',
+	'oppenvird',
+	'oppsimd',
+	'oppmaind'
+]
+
+libraries = [
+	'pthread',
+	'nad',
+	# omnet libs
+	'opptkenv',
+	'oppenvir',
+	'opplayout',
+	'oppcmdenv',
+	'oppenvir',
+	'oppsim',
+	'oppmain'
+]
+
+####### Boost libraries #######
+
+libraries_boost = [
+	'boost_system',
+	'boost_filesystem',
+	'boost_thread'
+]
+
+libraries_boost_mt = [
+	'boost_system-mt', 
+	'boost_filesystem-mt',
+	'boost_thread-mt'
+]
+
+out, err = Popen ('/sbin/ldconfig -p', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+
+mt = re.findall (r'.*libboost_system-mt.*', out)
+st = re.findall (r'.*libboost_system.*', out)
+
+if len(mt) <> 0:
+	libraries.append(libraries_boost_mt)
+	libraries_dbg.append(libraries_boost_mt)
+elif len (st) <> 0:
+	libraries.append(libraries_boost)
+	libraries_dbg.append(libraries_boost)
+else:
+	print "\n*** Unable to find boost libraries."
+	print "*** Please check your installation.\n"
+	exit(1)
+	
+
+####### libdl (Linux only) #######
+
+if platform.system() == "Linux":
+	libraries.append('dl')
+
+####### Source files #######
+
+# OMNeT message file
+os.system(omnetRoot + "/bin/opp_msgc ../../../src/targets/omnetpp/omnetPacket.msg")
+
+sources = [
+	'systemOmnet.cpp',
+	'simpleScheduler.cpp',
+	'netAdaptOmnet.cpp',
+	'messagesOmnet.cpp',
+	'omnetPacket_m.cc',
+	'appConnectorOmnet.cpp',
+	'apps/pingPong.cpp',
+	'apps/cbr.cpp'
+]
+
+includes = omnetIncludes
+
+####### Compiler flags #######
+
+omnetEnv['CPPPATH'].append(includes)
+omnetEnv['LIBS'].append(libraries)
+omnetEnv['LIBPATH'].append([
+	'../../daemon',
+	omnetLibDir
+])
+omnetEnv['LINKFLAGS'].append([
+	'-rdynamic', 
+	'-Wl,--export-dynamic', 
+	'-Wl,-rpath,' + omnetLibDir + ':.',
+	'-u _tkenv_lib', 
+	'-u _cmdenv_lib'
+])
+omnetEnv['DEFINES'].append([
+	'XMLPARSER=libxml',
+	'WITH_PARSIM',
+	'WITH_NETBUILDER'
+])
+
+if useInetFramework:
+	libraries.append('inet')
+	omnetEnv['CCFLAGS'].append(["-DSYS_OMNET_USE_INET"])
+	omnetEnv['LIBPATH'].append([inetFrameworkPath + "/src"])
+	omnetEnv['CPPPATH'].append([
+		inetFrameworkPath + "/src",
+		inetFrameworkPath + "/src/base",
+		inetFrameworkPath + "/src/mobility",
+		inetFrameworkPath + "/src/networklayer",
+		inetFrameworkPath + "/src/networklayer/common",
+		inetFrameworkPath + "/src/networklayer/ipv4",
+		inetFrameworkPath + "/src/networklayer/contract",
+		inetFrameworkPath + "/src/linklayer",
+		inetFrameworkPath + "/src/linklayer/contract",
+		inetFrameworkPath + "/src/nodes",
+		inetFrameworkPath + "/src/node/adhoc"
+    ])
+
+if useInetManet:
+	libraries.append('inet')
+	omnetEnv['CCFLAGS'].append(["-DSYS_OMNET_USE_INET"])
+	omnetEnv['LIBPATH'].append([inetManetPath + "/src"])
+	omnetEnv['CPPPATH'].append([
+		inetManetPath + "/src",
+		inetManetPath + "/src/base",
+		inetManetPath + "/src/mobility",
+		inetManetPath + "/src/networklayer",
+		inetManetPath + "/src/networklayer/common",
+		inetManetPath + "/src/networklayer/ipv4",
+		inetManetPath + "/src/networklayer/contract",
+		inetManetPath + "/src/linklayer",
+		inetManetPath + "/src/linklayer/contract",
+		inetManetPath + "/src/nodes",
+		inetManetPath + "/src/node/adhoc"
+    ])
+    
+if useMf2:
+	libraries.append(['mfcore', 'mfcontrib'])
+	omnetEnv['CCFLAGS'].append(["-DSYS_OMNET_USE_MF2"])
+	omnetEnv['LIBPATH'].append([mf2Path + "/core", mf2Path + "/contrib"])
+	omnetEnv['CPPPATH'].append([
+		mf2Path + "/core/basicMessages",
+		mf2Path + "/core/basicModules",
+		mf2Path + "/core/channelControl",
+		mf2Path + "/core/blackboard",
+		mf2Path + "/core/utils",
+		mf2Path + "/core/basicMessages",
+		mf2Path + "/contrib/applLayer",
+		mf2Path + "/contrib/battery",
+		mf2Path + "/contrib/bmac",
+		mf2Path + "/contrib/lmac",
+		mf2Path + "/contrib/messages",
+		mf2Path + "/contrib/mobility",
+		mf2Path + "/contrib/netwLayer",
+		mf2Path + "/contrib/nic",
+		mf2Path + "/contrib/nic/macLayer",
+		mf2Path + "/contrib/nic/phyLayer",
+		mf2Path + "/contrib/nic/radios",
+		mf2Path + "/contrib/utils"
+	])
+
+####### Program #######
+
+
+# -Wl,--no-as-needed used to include libs into omnet build in > gcc4.6
+omnetEnv.Program(target = 'omnet_na', source = sources, LINKFLAGS=["-Wl,--no-as-needed", "-rdynamic"])
+omnetEnv.Alias('omnet', 'omnet_na')

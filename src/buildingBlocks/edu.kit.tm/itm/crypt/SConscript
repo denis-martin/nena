@@ -1,0 +1,21 @@
+Import('env')
+
+bbenv = env.Clone();
+
+bbenv.Append(CCFLAGS = ['-fPIC'])
+
+staticfiles = [
+	'bb_frag.cpp',
+	'bb_crc.cpp',
+	'bb_enc.cpp',
+	'bb_header.cpp',
+	'bb_pad.cpp',
+	]
+
+sharedfiles = list()
+sharedfiles.append(staticfiles)
+sharedfiles.append ('loader.cpp')
+
+Default(bbenv.StaticLibrary('itm-crypt', staticfiles))
+
+Default(bbenv.SharedLibrary('itm-crypt', sharedfiles, LIBS='cryptopp'))

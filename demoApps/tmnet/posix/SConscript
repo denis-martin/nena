@@ -1,0 +1,10 @@
+
+Import('env')
+
+env['CPPPATH'].append(['..'])
+
+####### Targets #######
+
+Default(env.SharedLibrary('tmnetposix', [
+	'net_posix.cpp',
+]))

@@ -1,0 +1,2 @@
+component {LWUUID} components/localweb.js
+contract @mozilla.org/network/protocol;1?name=LWSCHEME {LWUUID}

@@ -1,0 +1,19 @@
+import os
+import subprocess
+
+Import('env')
+
+penv = env.Clone()
+
+penv.Append(CCFLAGS = ['-fPIC'])
+
+#
+# buffers
+#
+buffersDir = '/3rdparty/reboost'
+buffersArchive = buffersDir + '/libreboost.a'
+if not os.path.exists(env.GetLaunchDir() + buffersArchive):
+	print "  Building reboost buffers... " + buffersDir
+	subprocess.call(['make', '-C', env.GetLaunchDir() + buffersDir])
+
+Default(penv.StaticLibrary('md5', ['md5/md5.cpp']))

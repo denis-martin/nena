@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<spec>
+  <components type="internalservice">
+			<component id="internalservice://nena/config">
+			  <parameter name="specpath">
+			    <value datatype="string">specs</value>
+			  </parameter>
+			  <parameter name="spec_dependency">
+			    <value datatype="string">strict</value>
+			  </parameter>
+			  <parameter name="save_config">
+			    <value datatype="bool">0</value>
+			  </parameter>
+			</component>
+    </components>
+</spec>

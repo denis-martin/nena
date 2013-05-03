@@ -1,0 +1,4 @@
+# Partial Tkenv config file -- see $HOME/.tkenvrc as well
+inspector "Net1_Tcpip_NscLinux26" "Net1_Tcpip_NscLinux26" "2" "607x313+684+104:normal"
+inspector "Net1_AdhocRouting" "Net1_AdhocRouting" "2" "607x600+6+67"
+

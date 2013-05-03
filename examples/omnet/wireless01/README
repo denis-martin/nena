@@ -1,0 +1,7 @@
+
+For this example, you need to compile NENA with INET-MANET support:
+
+  scons
+  scons inetmanet=1 omnet
+
+

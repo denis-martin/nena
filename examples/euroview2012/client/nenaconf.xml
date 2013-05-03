@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <nodes>
+
+    <node name="node://kit/client">
+      <components type="netlet">
+      </components>
+      <components type="appServer">
+        <component id="appServer://boost/socket/">
+          <parameter name="socketName">
+            <value datatype="string">/tmp/nena_socket_client</value>
+          </parameter>
+        </component>
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table" width="2" height="3">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://web/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://cdn/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://video/0</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://web/0">
+          <parameter name="ip"><value datatype="string">10.10.10.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50110</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://web</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50910</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://cdn/0">
+          <parameter name="ip"><value datatype="string">10.10.10.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50120</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://cdn</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50920</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://video/0">
+          <parameter name="ip"><value datatype="string">10.10.10.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50130</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://video</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50930</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="internalservice">
+        <component id="internalservice://nena/repository">
+          <parameter name="simpleArchitectures">
+            <value datatype="string" type="list" length="3">
+              <li>architecture://web</li>
+              <li>architecture://cdn</li>
+              <li>architecture://video</li>
+            </value>
+          </parameter>
+          <parameter name="netletsToLoad">
+            <value datatype="string" type="list" length="7">
+              <li>netlet://web/SimpleReliableTransportNetlet</li>
+              <li>netlet://web/SimpleRoutingNetlet</li>
+              <li>netlet://video/SimpleReliableTransportNetlet</li>
+              <li>netlet://video/SimpleControlTransportNetlet</li>
+              <li>netlet://video/SimpleRoutingNetlet</li>
+              <li>netlet://cdn/SimpleReliableTransportNetlet</li>
+              <li>netlet://cdn/SimpleRoutingNetlet</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="addrMapper">
+        <component id="addrMapper://web">
+          <parameter name="resolverList">
+            <value datatype="string" type="table" height="4" width="3">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50110</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50210</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50910</td></tr>
+            </value>
+          </parameter>
+        </component>
+        <component id="addrMapper://cdn">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50120</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50220</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50920</td></tr>
+            </value>
+          </parameter>
+        </component>
+        <component id="addrMapper://video">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50130</td></tr>
+              <tr><td>node://kit/streamserver</td><td>10.10.10.3</td><td>50330</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50930</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+
+    <node name="node://kit/videostore">
+      <components type="netlet">
+      </components>
+      <components type="appServer">
+        <component id="appServer://boost/socket/">
+          <parameter name="socketName">
+            <value datatype="string">/tmp/nena_socket_videostore</value>
+          </parameter>
+        </component>
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table" width="2" height="2">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://web/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://cdn/0</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://web/0">
+          <parameter name="ip"><value datatype="string">10.10.10.2</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50210</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://web</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50911</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://cdn/0">
+          <parameter name="ip"><value datatype="string">10.10.10.2</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50220</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://cdn</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50921</li>
+            </value>
+          </parameter>
+        </component>
+     </components>
+      <components type="internalservice">
+        <component id="internalservice://nena/repository">
+          <parameter name="simpleArchitectures">
+            <value datatype="string" type="list" length="2">
+              <li>architecture://web</li>
+              <li>architecture://cdn</li>
+            </value>
+          </parameter>
+          <parameter name="netletsToLoad">
+            <value datatype="string" type="list" length="4">
+              <li>netlet://web/SimpleReliableTransportNetlet</li>
+              <li>netlet://web/SimpleRoutingNetlet</li>
+              <li>netlet://cdn/SimpleReliableTransportNetlet</li>
+              <li>netlet://cdn/SimpleRoutingNetlet</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="addrMapper">
+        <component id="addrMapper://web">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50110</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50210</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50911</td></tr>
+            </value>
+          </parameter>
+        </component>
+        <component id="addrMapper://cdn">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50120</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50220</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50921</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+
+    <node name="node://kit/streamserver">
+      <components type="netlet">
+      </components>
+      <components type="appServer">
+        <component id="appServer://boost/socket/">
+          <parameter name="socketName">
+            <value datatype="string">/tmp/nena_socket_streamserver</value>
+          </parameter>
+        </component>
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table" width="2" height="1">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://video/0</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://video/0">
+          <parameter name="ip"><value datatype="string">10.10.10.3</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50330</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://video</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.9:50931</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="internalservice">
+        <component id="internalservice://nena/repository">
+          <parameter name="simpleArchitectures">
+            <value datatype="string" type="list" length="1">
+              <li>architecture://video</li>
+            </value>
+          </parameter>
+          <parameter name="netletsToLoad">
+            <value datatype="string" type="list" length="3">
+              <li>netlet://video/SimpleControlTransportNetlet</li>
+              <li>netlet://video/SimpleReliableTransportNetlet</li>
+              <li>netlet://video/SimpleRoutingNetlet</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="addrMapper">
+        <component id="addrMapper://video">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50130</td></tr>
+              <tr><td>node://kit/streamserver</td><td>10.10.10.3</td><td>50330</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50931</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+
+    <node name="node://kit/router">
+      <components type="netlet">
+      </components>
+      <components type="appServer">
+        <component id="appServer://boost/socket/">
+          <parameter name="socketName">
+            <value datatype="string">/tmp/nena_socket_router</value>
+          </parameter>
+        </component>
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table" width="2" height="6">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://web/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://web/1</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://cdn/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://cdn/1</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://video/0</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://video/1</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://web/0">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50910</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://web</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.1:50110</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://web/1">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50911</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://web</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.2:50210</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://cdn/0">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50920</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://cdn</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.1:50120</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://cdn/1">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50921</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://cdn</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.2:50220</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://video/0">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50930</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://video</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.1:50130</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://video/1">
+          <parameter name="ip"><value datatype="string">10.10.10.9</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50931</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://video</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>10.10.10.3:50330</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="internalservice">
+        <component id="internalservice://nena/repository">
+          <parameter name="simpleArchitectures">
+            <value datatype="string" type="list" length="3">
+              <li>architecture://web</li>
+              <li>architecture://cdn</li>
+              <li>architecture://video</li>
+            </value>
+          </parameter>
+          <parameter name="netletsToLoad">
+            <value datatype="string" type="list" length="3">
+              <li>netlet://web/SimpleRoutingNetlet</li>
+              <li>netlet://cdn/SimpleRoutingNetlet</li>
+              <li>netlet://video/SimpleRoutingNetlet</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="addrMapper">
+        <component id="addrMapper://web">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50110</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50210</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50910</td></tr>
+            </value>
+          </parameter>
+        </component>
+        <component id="addrMapper://cdn">
+          <parameter name="resolverList">
+            <value datatype="string" type="table">
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50120</td></tr>
+              <tr><td>node://kit/videostore</td><td>10.10.10.2</td><td>50220</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50920</td></tr>
+            </value>
+          </parameter>
+        </component>
+        <component id="addrMapper://video">
+          <parameter name="resolverList">
+            <value datatype="string" type="table" >
+              <tr><td>node://kit/client</td><td>10.10.10.1</td><td>50130</td></tr>
+              <tr><td>node://kit/streamserver</td><td>10.10.10.3</td><td>50330</td></tr>
+              <tr><td>node://kit/router</td><td>10.10.10.9</td><td>50930</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+
+  </nodes>
+  <defaults>
+    <components type="netlet">
+      <component id="netlet://web/SimpleReliableTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table" width="2" height="2">
+            <tr><td>namespaces</td><td>|nenaweb|app|</td></tr>
+            <tr><td>content-type</td><td>application/octet-stream</td></tr>
+          </value>
+        </parameter>
+      </component>
+      <component id="netlet://cdn/SimpleReliableTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table" width="2" height="2">
+            <tr><td>namespaces</td><td>|nenacdn|</td></tr>
+            <tr><td>content-type</td><td>application/octet-stream</td></tr>
+          </value>
+        </parameter>
+      </component>
+      <component id="netlet://video/SimpleReliableTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table" width="2" height="2">
+            <tr><td>namespaces</td><td>|nenavideo|</td></tr>
+            <tr><td>content-type</td><td>application/octet-stream</td></tr>
+          </value>
+        </parameter>
+      </component>
+      <component id="netlet://video/SimpleControlTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table" width="2" height="2">
+            <tr><td>namespaces</td><td>|nenavideo|</td></tr>
+            <tr><td>content-type</td><td>text/cmd</td></tr>
+          </value>
+        </parameter>
+      </component>
+    </components>
+    <components type="internalservice">
+      <component id="internalservice://nena/repository">
+        <parameter name="archsDirectory">
+          <value datatype="string">../../../build/archs/</value>
+        </parameter>
+        <parameter name="netletsDirectory">
+          <value datatype="string">../../../build/netlets/</value>
+        </parameter>
+      </component>
+      <component id="internalservice://nena/config">
+        <parameter name="spec_dependency">
+          <value datatype="string">permissive</value>
+        </parameter>
+      </component>
+    </components>
+    <components type="netadapt">
+      <component id="netadapt://boost/udp/">
+        <parameter name="allowedHosts">
+          <value datatype="string" type="list" length="5">
+            <li>127.0.0.1</li>
+            <li>10.10.10.1</li>
+            <li>10.10.10.2</li>
+            <li>10.10.10.3</li>
+            <li>10.10.10.9</li>
+          </value>
+        </parameter>
+      </component>
+    </components>
+  </defaults>
+</config>

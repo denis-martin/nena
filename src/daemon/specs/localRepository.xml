@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+	<components type="internalservice">
+		<component id="internalservice://nena/repository">
+			<parameter name="archsDirectory">
+				<value datatype="string">../../../build/archs/</value>
+			</parameter>
+			<parameter name="netletsDirectory">
+				<value datatype="string">../../../build/netlets/</value>
+			</parameter>
+			<parameter name="buildingBlocksDirectory">
+				<value datatype="string">../../../build/buildingBlocks/</value>
+			</parameter>
+			<parameter name="netletsToLoad">
+				<value datatype="string" type="list" length="1">
+					<li>netlet://edu.kit.tm/itm/simpleArch/SimpleNetlet</li>
+				</value>
+			</parameter>
+			<parameter name="netletsToModel">
+				<value datatype="string" type="list" length="0">
+				</value>
+			</parameter>
+		</component>
+	</components>
+</spec>

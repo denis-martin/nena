@@ -1,0 +1,24 @@
+
+Import('env')
+
+bbenv = env.Clone();
+
+bbenv['CPPPATH'].append(['#/src']);
+
+bbenv.Append(CCFLAGS = ['-fPIC'])
+
+bbenv['LIBS'].append(['md5'])
+bbenv['LIBPATH'].append(['#/3rdparty'])
+
+staticfiles = [
+#	'bb_hiimapUser.cpp',
+	'bb_restCommands.cpp',
+	'bb_lossSig.cpp',
+]
+
+sharedfiles = list()
+sharedfiles.append(staticfiles)
+sharedfiles.append('loader.cpp')
+
+Default(bbenv.StaticLibrary('itm-sig', staticfiles))
+Default(bbenv.SharedLibrary('itm-sig', sharedfiles))

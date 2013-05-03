@@ -1,0 +1,66 @@
+import os
+import re
+import subprocess
+from subprocess import Popen, PIPE
+
+#Import('env')
+if ARGUMENTS.get('debug', 0):
+	env = Environment(CCFLAGS = ['-g', '-Wall'])
+else:
+	env = Environment(CCFLAGS = ['-O2'])
+
+####### Link libraries #######
+
+libraries = []
+
+env['LIBPATH'] = ['../nenai']
+
+env['LIBS'] = ['nenai', 'dl','pthread']
+
+env['CPPPATH'] = ['../nenai', 'nena', '.']
+
+####### Boost libraries #######
+
+libraries_boost = [
+	'boost_system',
+	'boost_thread'
+]
+
+libraries_boost_mt = [
+	'boost_system-mt', 
+	'boost_thread-mt'
+]
+
+out, err = Popen ('/sbin/ldconfig -p', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+
+mt = re.findall (r'.*libboost_system-mt.*', out)
+st = re.findall (r'.*libboost_system.*', out)
+
+if len(mt) <> 0:
+	libraries.append(libraries_boost_mt)
+elif len (st) <> 0:
+	libraries.append(libraries_boost)
+
+env['LIBS'].append(libraries)
+
+####### Targets #######
+
+Default(env.SharedLibrary('tmnet', [
+	'net.cpp',
+	'net_c.cpp',
+	'net_plugin.cpp',
+	'nena/net_nena.cpp'
+]))
+
+#Default(env.Program('test', [
+#	'test.cpp'
+#], LIBS = ['tmnet'], LIBPATH = ['.']))
+
+Default(env.Program('test_c', [
+	'test_c.c'
+], LIBS = ['tmnet'], LIBPATH = ['.']))
+
+
+# Discontinued
+#Export('env')
+#env.SConscript('posix/SConscript')

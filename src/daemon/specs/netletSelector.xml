@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+  <components type="internalservice">
+    <component id="internalservice://nena/netletSelector">
+      <parameter name="defaultNetlet">
+		    <value datatype="string">netlet://edu.kit.tm/itm/simpleArch/SimpleNetlet</value>
+		  </parameter>
+    </component>
+  </components>
+</spec>

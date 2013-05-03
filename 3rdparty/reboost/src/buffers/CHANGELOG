@@ -1,0 +1,16 @@
+Changelog of the reboost buffers
+
+2012-05-09; author: Sebastian Mies
++ added compression (miniz) to tlv
+
+2012-05-08; author: Sebastian Mies
++ fixed shared_buffer_t::make_unique()
++ added shared_buffer_t::resize()
+o made message_t::operator() const
++ added first type-length-value (tlv) implementations based on the buffers
+
+2012-02-07; author: Sebastian Mies 
++ Message compaction when no. of buffers are depleted
++ Shared buffer concatenation using operator+
++ FreeBSD license header
+

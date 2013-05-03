@@ -1,0 +1,83 @@
+
+# nad - Node Architecture Daemon (using boost as base system)
+
+import platform
+import os
+import re
+from subprocess import Popen, PIPE
+
+Import('env')
+
+boostEnv = env.Clone()
+
+####### Link libraries #######
+
+libraries = [
+	'nad',
+	'reboost',
+	'rt',
+	'pthread',
+]
+
+####### Boost libraries #######
+
+libraries_boost = [
+	'boost_system',
+	'boost_filesystem',
+	'boost_date_time',
+	'boost_thread',
+	'boost_regex'
+]
+
+libraries_boost_mt = [
+	'boost_system-mt', 
+	'boost_filesystem-mt',
+	'boost_date_time-mt',
+	'boost_thread-mt',
+	'boost_regex-mt'
+]
+
+out, err = Popen ('/sbin/ldconfig -p', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+
+mt = re.findall (r'.*libboost_system-mt.*', out)
+st = re.findall (r'.*libboost_system.*', out)
+
+if len(mt) <> 0:
+	libraries.append(libraries_boost_mt)
+elif len (st) <> 0:
+	libraries.append(libraries_boost)
+else:
+	print "\n*** Unable to find boost libraries."
+	print "*** Please check your installation.\n"
+	exit(1)
+
+# adding libdl to libraries list if necessary
+if platform.system() == "Linux":
+	libraries.append('dl')
+
+####### Source files #######
+
+sources = [
+	'main.cpp',
+	'systemBoost.cpp',
+	'netAdaptBoost.cpp',
+	'netAdaptBoostUDP.cpp',
+	'netAdaptBoostTap.cpp',
+	'netAdaptBoostRaw.cpp',
+	'boostSchedulerMt.cpp',
+	'socketAppConnector.cpp',
+	'memAppConnector.cpp',
+	'enhancedAppConnector.cpp',
+	'syncBoost.cpp'
+]
+
+boostEnv.Replace(LIBPATH = [
+	'../../daemon', 
+	'../../include',
+	'../../../3rdparty/reboost', 
+#	'/usr/local/lib'
+])
+
+boostEnv.Program('nad', sources, LIBS=libraries, LINKFLAGS='-rdynamic')
+boostEnv.Alias('boost', 'nad')
+

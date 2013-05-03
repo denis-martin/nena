@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+  <components type="system">
+    <component id="system://boost">
+      <parameter name="appServersToLoad">
+        <value datatype="string" type="list" length="0">
+        </value>
+      </parameter>
+      <parameter name="schedulerList">
+        <value datatype="string" type="list" length="0"></value>
+      </parameter>
+    </component>
+  </components>
+</spec>

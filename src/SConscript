@@ -1,0 +1,27 @@
+
+Import('env')
+
+import os
+import os.path
+import subprocess
+
+# the Node Architecture Daemon
+env.SConscript(['daemon/SConscript'])
+
+# static building block repository
+env.SConscript(['buildingBlocks/SConscript'])
+
+# Architectures (Multiplexers)
+env.SConscript(['archs/edu.kit.tm/itm/simpleArch/SConscript'])
+#env.SConscript(['archs/ipv6/SConscript'])
+
+# Netlets
+env.SConscript(['netlets/edu.kit.tm/itm/simpleArch/SConscript'])
+
+# target systems
+if 'boost' in COMMAND_LINE_TARGETS:
+	env.SConscript(['targets/boost/SConscript'])
+
+if 'omnet' in COMMAND_LINE_TARGETS:
+	env.SConscript(['targets/omnetpp/SConscript'])
+

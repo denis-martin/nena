@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <nodes>
+    <node name="node://localhost/node01">
+      <components type="netlet">
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://boost/udp/50779</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://boost/udp/50778</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://boost/udp/50779">
+          <parameter name="ip"><value datatype="string">127.0.0.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50779</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://edu.kit.tm/itm/simpleArch</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>127.0.0.1:50879</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://boost/udp/50778">
+          <parameter name="ip"><value datatype="string">127.0.0.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50778</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://edu.kit.tm/itm/simpleArch</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>127.0.0.1:50878</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+    <node name="node://localhost/node02">
+      <components type="netlet">
+      </components>
+      <components type="appServer">
+        <component id="appServer://boost/socket/">
+          <parameter name="socketName">
+            <value datatype="string">/tmp/nena_socket_node02</value>
+          </parameter>
+        </component>
+      </components>
+      <components type="system">
+        <component id="system://boost">
+          <parameter name="netAdapts">
+            <value datatype="string" type="table">
+              <!-- NetAdapt class, NetAdapt name -->
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://boost/udp/50879</td></tr>
+              <tr><td>netadapt://boost/udp/</td><td>netadapt://boost/udp/50878</td></tr>
+            </value>
+          </parameter>
+        </component>
+      </components>
+      <components type="netadapt">
+        <component id="netadapt://boost/udp/50879">
+          <parameter name="ip"><value datatype="string">127.0.0.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50879</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://edu.kit.tm/itm/simpleArch</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>127.0.0.1:50779</li>
+            </value>
+          </parameter>
+        </component>
+        <component id="netadapt://boost/udp/50878">
+          <parameter name="ip"><value datatype="string">127.0.0.1</value></parameter>
+          <parameter name="port"><value datatype="uint32_t">50878</value></parameter>
+          <parameter name="arch"><value datatype="string">architecture://edu.kit.tm/itm/simpleArch</value></parameter>
+          <parameter name="broadcast">
+            <value datatype="string" type="list">
+              <li>127.0.0.1:50778</li>
+            </value>
+          </parameter>
+        </component>
+      </components>
+    </node>
+  </nodes>
+  <defaults>
+    <components type="internalservice">
+      <component id="internalservice://nena/repository">
+        <parameter name="archsDirectory">
+          <value datatype="string">../../../build/archs/</value>
+        </parameter>
+        <parameter name="netletsDirectory">
+          <value datatype="string">../../../build/netlets/</value>
+        </parameter>
+        <parameter name="netletsToLoad">
+          <value datatype="string" type="list">
+            <li>netlet://edu.kit.tm/itm/simpleArch/SimpleTransportNetlet</li> 
+            <li>netlet://edu.kit.tm/itm/simpleArch/SimpleReliableTransportNetlet</li> 
+            <li>netlet://edu.kit.tm/itm/simpleArch/SimpleRoutingNetlet</li>
+          </value>
+        </parameter>
+      </component>
+      <component id="internalservice://nena/config">
+        <parameter name="specpath">
+		  <value datatype="string">specs</value>
+		</parameter>
+        <parameter name="spec_dependency">
+          <value datatype="string">permissive</value>
+        </parameter>
+      </component>
+    </components>
+    <components type="addrMapper">
+      <component id="addrMapper://edu.kit.tm/itm/simpleArch">
+        <parameter name="resolverList">
+          <value datatype="string" type="table">
+            <tr><td>node://localhost/node01</td><td>127.0.0.1</td><td>50779</td></tr>
+            <tr><td>node://localhost/node01</td><td>127.0.0.1</td><td>50778</td></tr>
+            <tr><td>node://localhost/node02</td><td>127.0.0.1</td><td>50879</td></tr>
+            <tr><td>node://localhost/node02</td><td>127.0.0.1</td><td>50878</td></tr>
+          </value>
+        </parameter>
+      </component>
+    </components>
+    <components type="netadapt">
+      <component id="netadapt://boost/udp/">
+        <parameter name="allowedHosts">
+          <value datatype="string" type="list">
+            <li>127.0.0.1</li>
+          </value>
+        </parameter>
+      </component>
+    </components>
+    <components type="netlet">
+      <component id="netlet://edu.kit.tm/itm/simpleArch/SimpleTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table">
+            <tr><td>selectionPriority</td><td>10</td></tr>
+          </value>
+        </parameter>
+      </component>
+      <component id="netlet://edu.kit.tm/itm/simpleArch/SimpleReliableTransportNetlet">
+        <parameter name="properties">
+          <value datatype="string" type="table">
+            <tr><td>selectionPriority</td><td>20</td></tr>
+          </value>
+        </parameter>
+      </component>
+    </components>
+  </defaults>
+</config>

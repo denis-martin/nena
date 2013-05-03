@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<spec>
+  <components type="addrMapper">
+    <component id="addrMapper://edu.kit.tm/itm/simpleArch">
+      <parameter name="resolverList">
+        <value datatype="string" type="table" height="2" width="3">
+          <tr><td>node://broadcast</td><td>127.0.0.1</td><td>50555</td></tr>
+          <tr><td>node://localhost</td><td>127.0.0.1</td><td>50555</td></tr>
+          <tr></tr>
+        </value>
+      </parameter>
+    </component>
+  </components>
+</spec>

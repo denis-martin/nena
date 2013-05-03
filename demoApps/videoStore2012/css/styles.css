@@ -1,0 +1,120 @@
+html, body {
+  background-color: #000;
+  padding: 0;
+  margin: 0;
+  color: #eee;
+  font-family: Calibri, Verdana, Arial, sans-serif;
+}
+
+img {
+  margin: 0.5em;
+}
+
+p {
+  margin: 0.5em;
+  padding: 0 0.5em;
+}
+
+h1 {
+  margin: 0;
+}
+
+h2 {
+  margin: 0 0 0.5em;
+  padding: 0.5em;
+}
+
+.hiddenContainer {
+  float: right;
+  display: none;
+}
+
+.hiddenContainer:target {
+  display: block;
+}
+
+#wrap {
+  margin: 0 auto;
+  width: 950px;
+}
+
+#header {
+  margin: 0.5em;
+  padding: 1em;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: #b9090b;
+  text-align: center;
+  box-shadow: 0px 0px 3px 2px #b9090b;
+}
+
+#header a {
+  color: #eee;
+  text-decoration: none;
+}
+	
+#main {
+  overflow: auto;
+  width: 760px;
+  margin: 0 auto 0 auto;
+  overflow: hidden;
+}
+
+#main a {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#description {
+  float: left;
+  width: 600px;
+  overflow: auto;
+  margin-top: -40px;
+}
+
+#sidebar {
+  float: right;
+  width: 320px;
+  overflow: auto;
+}
+
+#sidebar video {
+  margin: 5px;
+  border: 1px solid #a99;
+  box-shadow: 0px 0px 3px 2px #a99;
+}
+
+#bottombar {
+  float: none;
+  overflow: auto;
+  margin: 0.5em auto 0.5em auto;
+  padding: 1em;
+  text-align: center;
+  width: 920px;
+}
+
+.button {
+  display: block;
+  color: #eee;
+  width: 430px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px 5px 0px 5px;
+  font-size: 140%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nenaurl {
+  font-size: 75%;
+}
+
+#watchnow {
+  float: left;
+}
+
+#download {
+  float: right;
+}
+

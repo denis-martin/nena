@@ -1,0 +1,33 @@
+reboost is a tribute to the well-known boost libraries (http://boost.org).
+
+The goal of reboost is to provide independent source-code that eases 
+development in manifold areas. To this end, we focus on 
+
+  * small, elegant snippets/convenience functions,
+  * efficient collections of helper classes and base-types
+  
+and explicitely NOT on full-fledged well-designed libraries. All source-code 
+should be seen as basis for derivative work. However, we are happy to merge 
+your changes. reboost follows the philosophy:
+
+  * Nothing is perfect: Do not blame! Contribute!
+  * Don't re-write! Adapt! Mash-up! Be creative!
+  * Don't challenge other approaches: 
+    All source-code in reboost has its own history and purpose. 
+  * Nothing is static. Everything may change---anytime.
+
+The directory structure constraints of reboost are as follows:
+
+  1) source-codes inside a directory has no cross-dependencies. This means,
+     they depend only on files inside the same directory or common libraries 
+     (e.g., boost or STL).
+
+  2) source-codes inside sub-directories has dependencies within its sub-tree 
+     only. E.g., implement plugins based on the source-code.
+     
+  3) examples belong to an "examples" folder. Folders with plugin's or addons
+     belong start with "plugin."
+     
+To be continued ... 
+      
+
