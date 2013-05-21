@@ -10,14 +10,15 @@
  *
  * \section Intro Introduction
  *
- * This is an automatically generated reference documentation of the NENA prototype.
- * On this page, an overview of the implementation design is given, while the other
- * pages provide descriptions of the current interfaces. Beware, that these interfaces may
- * be incomplete are incomplete as they are about to evolve as needed.
+ * This is an automatically generated reference documentation of the NENA
+ * prototype. On this page, an overview of the implementation design is given,
+ * while the other pages provide descriptions of the current interfaces. Beware,
+ * that these interfaces may be incomplete as they are about to evolve as
+ * needed.
  *
- * The code is pure C++/STL with some use of the Boost libraries (mainly
- * header files). The daemon as well as the example implementations of Netlets
- * etc. are designed to run in multiple target environment, such as Linux and OMNeT++.
+ * The code is pure C++/STL with some use of the Boost libraries. The daemon as
+ * well as the example implementations of Netlets etc. are designed to run in
+ * multiple target environment, such as Linux and OMNeT++.
  *
  * \subsection SystemWrapper System Wrapper
  *
@@ -36,9 +37,9 @@
  * system. This is an abstraction for a thread and at least one must be
  * returned by ISystemWrapper::getMainScheduler().
  *
- * INetAdapt - At least one Network Access / Network Adaptor must be implemented.
- * This provides access to a medium where the outgoing messages are sent to
- * (and incoming are expected from).
+ * INetAdapt - At least one Network Access / Network Adaptor must be
+ * implemented. This provides access to a medium where the outgoing messages are
+ * sent to (and incoming are expected from).
  *
  * \subsection Daemon The NENA Daemon
  *
@@ -54,12 +55,6 @@
  * the daemon is able to access the meta data and to create instances of the
  * registered Netlets / Multiplexer.
  *
- * While there may be multiple instances of the same Netlet class on a node,
- * only a single instance of the multiplexer may exist. This singleton property
- * of the multiplexer is not enforced, since the daemon might be instantiated
- * multiple times in the same address space when used in a simulator like
- * OMNeT++.
- *
  * \subsection ProcSched Message processors and schedulers
  *
  * Each separate entity doing some message processing is a message processor
@@ -68,8 +63,15 @@
  * It schedules / enqueues the messages between processors. Schedulers may run
  * in separate threads, but all processors belonging to the same scheduler will
  * run in the same thread. The scheduler will take care about inter-thread
- * communication as necessary. In OMNeT++, schedulers may be represented by
+ * communication as necessary. In OMNeT++, schedulers are represented by
  * different modules.
+ *
+ * \subsection SourceOverview Source and message flow overview
+ *
+ * Here is an overview of the involved source files and components for a
+ * communication request started by an application.
+ *
+ * \htmlinclude sourceOverview.html
  */
 
 /* outdated...

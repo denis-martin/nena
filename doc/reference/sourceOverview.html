@@ -1,0 +1,163 @@
+
+
+<style type="text/css">
+
+.box {
+	margin: 4px;
+	border: 2px solid black;
+	padding: 6px;
+	float: left;
+	height: 50px;
+	background-color: #eeeeee;
+	font-family: Arial, Helvetica, Sans;
+	font-size: 11px;
+}
+
+.box div {
+	font-family: Arial, Helvetica, Sans;
+	font-size: 11px;
+}
+
+.right {
+	float: right;
+}
+
+.span2r {
+	height: 124px;
+}
+
+.span1c {
+	width: 236px;
+}
+
+.span2c {
+	width: 496px;
+}
+
+.span3c {
+	width: 756px;
+}
+
+</style>
+
+<div class="box span2c" style="border: none; background-color: transparent; margin: 6px">
+</div>
+<div class="box span1c" style="height: auto">
+	Firefox
+	<div class="box" style="height: auto; float: none;">demoApps / localweb / localweb-*.xpi</div>
+</div>
+<div style="clear: both"></div>
+
+<div class="box span2r span1c">
+	C / C++ applications, e.g.<br>
+	demoApps / pingPong / <a href="pingPong_2main__tmnet_8cpp.html">main_tmnet.cpp</a>
+</div>
+<div class="box span1c">
+	Python applications, e.g.<br>
+	demoApps / pingPong /<br>tmnetPing [ <a href="tmnetPingClient_8py_source.html">Client</a>, <a href="tmnetPingServer_8py_source.html">Server</a> ].py
+</div>
+<div class="box span1c">
+	HTTP wrapper for API<br>
+	demoApps / tmnet / <a href="webapi_8py.html">webapi.py</a>
+</div>
+<div class="box span2c">
+	Python wrapper for API<br>
+	demoApps / tmnet / <a href="tmnet_8py.html">tmnet.py</a>
+</div>
+<div style="clear: both"></div>
+
+<div class="box span3c" style="height: auto">
+	<div class="box" style="height: auto; width: 500px">
+		demoApps / tmnet / [ <a href="net_8cpp.html">net.cpp</a>, <a href="nena_2net__nena_8cpp.html">net_nena.cpp</a> ]
+	</div>
+	<div class="box" style="height: auto; border: none; margin: 4px">
+		libtmnet.so
+	</div>
+	<div class="box" style="height: auto; border: none; margin: 4px; float: right">
+		API library
+	</div>
+	<div style="clear: both"></div>
+	<div class="box" style="height: auto; width: 500px">
+		demoApps / nenai / [ nenai.cpp, socketNenai.cpp ]
+		<div style="float: right">
+			<a href="classINenai.html">INenai</a>,
+			<a href="classSocketNenai.html">SocketNenai</a>
+		</div>
+	</div>
+	<div class="box" style="height: auto; border: none; margin: 4px">
+		libnenai.a
+	</div>
+</div>
+
+<div class="box span3c" style="border: 2px dashed black; background-color: transparent; height: auto;">
+	/tmp/nena_socket_default
+	<div style="float: right">Unix Domain Socket for IPC</div>
+</div>
+<div style="clear: both"></div>
+
+<div class="box span3c" style="height: auto;">
+	<div class="box" style="width: 600px; height: auto;">
+		App Connector: src / targets / boost / [ enhancedAppConnector.cpp, socketAppConnector.cpp ]
+		<div style="float: right">
+			<a href="classIEnhancedAppConnector.html">IEnhancedAppConnector</a>,
+			<a href="classCSocketAppConnector.html">CSocketAppConnector</a>
+		</div>
+	</div>
+	<div style="float: right; text-align: right">
+		NENA<br>build / targets /<br>boost / nad
+	</div>
+	<div class="box" style="width: 600px; height: auto;">
+		Netlet Selector: src / daemon / netletSelector.cpp
+		<div style="float: right">
+			<a href="classCNetletSelector.html">CNetletSelector</a>
+		</div>
+	</div>
+	<div class="box" style="width: 600px; height: auto;">
+		Netlet: src / netlets / *
+		<div style="float: right">
+			e.g. <a href="classedu__kit__tm_1_1itm_1_1simpleArch_1_1CSimpleReliableTransportNetlet.html">CSimpleReliableTransportNetlet</a>
+		</div>
+		<div class="box" style="width: auto; height: auto; float: none">
+			Building Blocks: src / buildingBlocks / *
+			<div style="float: right">
+				e.g. <a href="classedu__kit__tm_1_1itm_1_1transport_1_1Bb__ArqGoBackN.html">Bb_ArqGoBackN</a>
+			</div>
+		</div>
+	</div>
+	<div class="box right" style="height: 147px; width: 100px">
+		Node-wide Management:<br>
+		src / daemon / management.cpp
+		<div style="float: right; margin-top: 10px">
+			<a href="classManagement.html">Management</a>
+		</div>
+	</div>
+	<div class="box" style="width: 600px; height: auto;">
+		Multiplexer: src / archs / *
+		<div style="float: right">
+			e.g. <a href="classedu__kit__tm_1_1itm_1_1simpleArch_1_1CSimpleMultiplexer.html">CSimpleMultiplexer</a>
+		</div>
+	</div>
+	<div class="box" style="width: 600px; height: auto;">
+		NetAdapts: targets / boost / [ netAdaptBoost.cpp, netAdaptBoost*.cpp ]
+		<div style="float: right">
+			<a href="classCBoostNetAdapt.html">CBoostNetAdapt</a>,
+			<a href="classCBoostUDPNetAdapt.html">CBoostUDPNetAdapt</a>,
+			<a href="classCBoostRawNetAdapt.html">CBoostRawNetAdapt</a>,
+			<a href="classCBoostTapNetAdapt.html">CBoostTapNetAdapt</a>
+		</div>
+	</div>
+</div>
+<div style="clear: both"></div>
+
+<div class="box span1c" style="border: 2px dashed black; background-color: transparent; height: auto; text-align: center;">
+	UDP Socket
+</div>
+<div class="box span1c" style="border: 2px dashed black; background-color: transparent; height: auto; text-align: center;">
+	Raw Socket
+</div>
+<div class="box span1c" style="border: 2px dashed black; background-color: transparent; height: auto; text-align: center;">
+	TUN/TAP Device
+</div>
+<div style="clear: both"></div>
+
+

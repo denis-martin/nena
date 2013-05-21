@@ -576,6 +576,10 @@ WARN_LOGFILE           =
 
 INPUT                  = include \
                          src \
+                         demoApps/tmnet \
+                         demoApps/nenai \
+                         demoApps/pingPong \
+                         demoApps/perf-test \
                          doc/reference/mainpage.h
 
 # This tag can be used to specify the character encoding of the source files
@@ -634,7 +638,7 @@ EXCLUDE_SYMBOLS        =
 # directories that contain example code fragments that are included (see
 # the \include command).
 
-EXAMPLE_PATH           =
+EXAMPLE_PATH           = doc/reference
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp
